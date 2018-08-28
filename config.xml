@@ -41,6 +41,10 @@
         <splash density="port-xxhdpi" src="www/res/screen/android/drawable-port-xxhdpi-screen.png" />
         <splash density="port-xxxhdpi" src="www/res/screen/android/drawable-port-xxxhdpi-screen.png" />
     </platform>
+    <platform name="android">
+	  <resource-file src="google-services.json" target="www/google-services.json" />
+	  <resource-file src="ringo.mp3" target="www/sonidos/ringo.mp3" />
+	</platform>
     <platform name="ios">
         <icon height="57" platform="ios" src="www/res/icon/ios/icon.png" width="57" />
         <icon height="114" platform="ios" src="www/res/icon/ios/icon@2x.png" width="114" />

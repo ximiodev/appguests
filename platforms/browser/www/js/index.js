@@ -212,6 +212,14 @@ var app = {
 			$('#section_Brochures .itemsIntContent').html('Loading...');
 			app.getBrochures();
 		}
+		if(section=='Promotions') {
+			$('#section_Promotions .itemsIntContent').html('Loading...');
+			app.getPromotions();
+		}
+		if(section=='News') {
+			$('#section_News .itemsIntContent').html('Loading...');
+			app.getNews();
+		}
     },
     putContentSectionInt: function(section, itemID) {
 		if(section=='Alarm_int') {
@@ -234,6 +242,180 @@ var app = {
 			$('#section_Brochure_int .itemsIntContent').html('Loading...');
 			app.getBrochure(itemID);
 		}
+		if(section=='Promotion_int') {
+			$('#section_Promotion_int .itemsIntContent').html('Loading...');
+			app.getPromotion(itemID);
+		}
+		if(section=='New_int') {
+			$('#section_New_int .itemsIntContent').html('Loading...');
+			app.getNew(itemID);
+		}
+    },
+    getNews: function() {
+		var desdedonde = $('#section_News .itemsIntContent');
+		if(!enviando) {
+			enviando = true;
+			var datos = {
+				'action':'getNews',
+				'sessionId': sessionId
+			}
+			$.ajax({
+				type: 'POST',
+				data: datos,
+				dataType: 'json',
+				url: apiURL,
+				success: function (data) {
+					enviando = false;
+					if(data.res) {
+						desdedonde.html('');
+						if(data.data.length>0) {
+							$.each(data.data, function(idx, item) {
+								var itemnew = '<div class="itemHomeBlock">'+
+											'		<div class="imgHomeBlock" style="background-image: url('+item.image+');"></div>'+
+											'		<div class="contHomeBlock">'+
+											'			<h4 class="subtitHomeBlock">'+item.title+'</h4>'+
+											'			<div class="textHomeBlock">'+item.date.substring(0,10)+'</div>'+
+											'			<button class="btn btn-primary btn-xs btnViewMoreNews app_back app_color" data-newid="'+item.idnew+'">View more</button>'+
+											'		</div>'+
+											'	</div>'+
+											'';
+								desdedonde.append(itemnew);
+							});
+						}
+					} else {
+						desdedonde.html('<div class="alert alert-info"><b>There are no news.</b></div>');
+					}
+					
+					$('#homescreen').addClass('menuopened');
+				},
+				error : function(xhr, ajaxOptions, thrownError) {
+					enviando = false;
+					desdedonde.html('<div class="alert alert-danger"><b>Error. try later</b></div>');
+				}
+			});
+		} 
+    },
+    getNew: function(newid) {
+		var desdedonde = $('#section_New_int .itemsIntContent');
+		if(!enviando || segudnop) {
+			enviando = true;
+			enviando = false;
+			var datos = {
+				'action':'getNew',
+				'sessionId': sessionId,
+				'newid': newid
+			}
+			$.ajax({
+				type: 'POST',
+				data: datos,
+				dataType: 'json',
+				url: apiURL,
+				success: function (data) {
+					enviando = false;
+					if(data.res) {
+						desdedonde.html('');
+						var item = data.data;
+						var imgeve = (item.image!="")?'	<div class="event_pic"><img src="'+item.image+'" class="event_img"></div>':'';
+						var table='<div class="event_cont">'+
+						'	<div class="event_title">'+item.title+'</div>'+
+						'	<div class="event_date">'+item.date.substring(0,10)+'</div>'+
+						''+imgeve+
+						'	<div class="event_desc">'+item.desc+'</div>'+
+						'</div>';
+						$('#section_New_int .titleElement').html(item.title);
+						desdedonde.append(table);
+					} else {
+						desdedonde.html('<div class="alert alert-info"><b>News not found.</b></div>');
+					}
+				},
+				error : function(xhr, ajaxOptions, thrownError) {
+					enviando = false;
+					desdedonde.html('<div class="alert alert-danger"><b>Error. try later</b></div>');
+				}
+			});
+		} 
+    },
+    getPromotions: function() {
+		var desdedonde = $('#section_Promotions .itemsIntContent');
+		if(!enviando) {
+			enviando = true;
+			var datos = {
+				'action':'getPromotions',
+				'sessionId': sessionId
+			}
+			$.ajax({
+				type: 'POST',
+				data: datos,
+				dataType: 'json',
+				url: apiURL,
+				success: function (data) {
+					enviando = false;
+					if(data.res) {
+						desdedonde.html('');
+						if(data.data.length>0) {
+							$.each(data.data, function(idx, item) {
+								var itemnew = '<div class="itemHomeBlock">'+
+											'		<div class="imgHomeBlock" style="background-image: url('+item.image+');"></div>'+
+											'		<div class="contHomeBlock">'+
+											'			<h4 class="subtitHomeBlock">'+item.title+'</h4>'+
+											'			<button class="btn btn-primary btn-xs btnViewMorePromo app_back app_color" data-promid="'+item.idpromo+'">View more</button>'+
+											'		</div>'+
+											'	</div>'+
+											'';
+								desdedonde.append(itemnew);
+							});
+						}
+					} else {
+						desdedonde.html('<div class="alert alert-info"><b>There are no activities.</b></div>');
+					}
+					
+					$('#homescreen').addClass('menuopened');
+				},
+				error : function(xhr, ajaxOptions, thrownError) {
+					enviando = false;
+					desdedonde.html('<div class="alert alert-danger"><b>Error. try later</b></div>');
+				}
+			});
+		} 
+    },
+    getPromotion: function(promid) {
+		var desdedonde = $('#section_Promotion_int .itemsIntContent');
+		if(!enviando || segudnop) {
+			enviando = true;
+			enviando = false;
+			var datos = {
+				'action':'getPromotion',
+				'sessionId': sessionId,
+				'promid': promid
+			}
+			$.ajax({
+				type: 'POST',
+				data: datos,
+				dataType: 'json',
+				url: apiURL,
+				success: function (data) {
+					enviando = false;
+					if(data.res) {
+						desdedonde.html('');
+						var item = data.data;
+						var imgeve = (item.image!="")?'	<div class="event_pic"><img src="'+item.image+'" class="event_img"></div>':'';
+						var table='<div class="event_cont">'+
+						'	<div class="event_title">'+item.title+'</div>'+
+						''+imgeve+
+						'	<div class="event_desc">'+item.desc+'</div>'+
+						'</div>';
+						$('#section_Promotion_int .titleElement').html(item.title);
+						desdedonde.append(table);
+					} else {
+						desdedonde.html('<div class="alert alert-info"><b>Promotion not found.</b></div>');
+					}
+				},
+				error : function(xhr, ajaxOptions, thrownError) {
+					enviando = false;
+					desdedonde.html('<div class="alert alert-danger"><b>Error. try later</b></div>');
+				}
+			});
+		} 
     },
     getActivities: function() {
 		var desdedonde = $('#section_Activities .itemsIntContent');
@@ -890,7 +1072,7 @@ var app = {
 							'		<div class="contHomeBlock">'+
 							'			<h4 class="subtitHomeBlock">'+item.title+'</h4>'+
 							'			<div class="textHomeBlock">'+item.date.substring(0,10)+'</div>'+
-							'			<button class="btn btn-primary btn-xs btnViewMore app_back app_color" data-newid="'+item.newsid+'">View more</button>'+
+							'			<button class="btn btn-primary btn-xs btnViewMoreNewsHome app_back app_color" data-newid="'+item.newsid+'">View more</button>'+
 							'		</div>'+
 							'	</div>'+
 							'';
@@ -1089,6 +1271,29 @@ var app = {
 				$('#section_Activity_int .itemsIntContent').html('');
 				$('#section_Activity_int .titleElement').html('');
 				app.putFullSectionInt('Activity_int', $(this).data('actid'));
+			});
+						
+			$('.itemsIntContent').on('click','.btnViewMorePromo',function(e) {
+				e.preventDefault();
+				$('#section_Promotion_int .itemsIntContent').html('');
+				$('#section_Promotion_int .titleElement').html('');
+				app.putFullSectionInt('Promotion_int', $(this).data('promid'));
+			});
+						
+			$('.itemsIntContent').on('click','.btnViewMoreNews',function(e) {
+				e.preventDefault();
+				$('#section_New_int .itemsIntContent').html('');
+				$('#section_New_int .titleElement').html('');
+				app.putFullSectionInt('New_int', $(this).data('newid'));
+			});
+			
+			$('.newsitems').on('click','.btnViewMoreNewsHome',function(e) {
+				e.preventDefault();
+				app.putFullSection('News');
+				segudnop = true;
+				$('#section_New_int .itemsIntContent').html('');
+				$('#section_New_int .titleElement').html('');
+				app.putFullSectionInt('New_int', $(this).data('newid'));
 			});
 						
 			$('.itemsIntContent').on('click','.lnkDirectoDow',function(e) {
