@@ -1093,10 +1093,11 @@ var app = {
 						
 			$('.itemsIntContent').on('click','.lnkDirectoDow',function(e) {
 				e.preventDefault();
-				$('#section_Brochure_int .itemsIntContent').html('');
-				$('#section_Brochure_int .titleElement').html('');
-				brochueretti = $(this).text();
-				app.putFullSectionInt('Brochure_int', $(this).attr('href'));
+				//~ $('#section_Brochure_int .itemsIntContent').html('');
+				//~ $('#section_Brochure_int .titleElement').html('');
+				//~ brochueretti = $(this).text();
+				//~ app.putFullSectionInt('Brochure_int', $(this).attr('href'));
+				window.open($(this).attr('href'), '_blank');
 			});
 			
 			$( "#left-panel" ).removeClass('hidden');
