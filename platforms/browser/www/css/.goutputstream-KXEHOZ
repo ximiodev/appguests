@@ -1,0 +1,478 @@
+* {
+    -webkit-tap-highlight-color: rgba(0,0,0,0); /* make transparent link selection, adjust last value opacity 0 to 1.0 */
+}
+@charset "utf-8";
+/* CSS Document */
+
+/* RESET */
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,sub,tt,var,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td {	margin:0;	padding:0;	border:0;	outline:0;	font-weight:inherit;	font-style:inherit;	font-size:100%;	font-family:inherit; }/* remember to define focus styles! */:focus {	outline:0;}body {	color:black;	background:white;}ol,ul {	list-style: none;}/* tables still need 'cellspacing="0"' in the markup */table {	border-collapse:separate;	border-spacing:0;}caption,th,td {	text-align:left;	font-weight:normal;}blockquote:before,blockquote:after,q:before,q:after {	content:"";}blockquote,q {	quotes: "" "";}a:link,a:visited {	text-decoration: none;}a:hover,a:active {	text-decoration: underline;}
+
+
+@font-face {
+	font-family: 'HelveticaNeueLTStdLtCn';
+	src:  url('../fonts/HelveticaNeueLTStdLtCn.eot?siansd');
+	src:  url('../fonts/HelveticaNeueLTStdLtCn.eot?siansd#iefix') format('embedded-opentype'),
+		url('../fonts/HelveticaNeueLTStdLtCn.ttf?siansd') format('truetype'),
+		url('../fonts/HelveticaNeueLTStdLtCn.woff?siansd') format('woff'),
+		url('../fonts/HelveticaNeueLTStdLtCn.svg?siansd#icomoon') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+@import url('https://fonts.googleapis.com/css?family=Montserrat:400,700,800');
+body {
+	font-family: 'Montserrat', sans-serif;
+    font-size:12px;
+    height:100%;
+    margin:0px;
+    padding:0px;
+    width:100%;
+	background-color: #FFF;
+	position: relative;
+}
+
+.container {
+    max-width: 100%;
+}
+
+.footer {
+    position: relative;
+    padding: 15px;
+    max-width: 1140px;
+    width: 100%;
+    text-align: center;
+    margin-left: -15px;
+    margin-right: -15px;
+}
+
+.screenapp {
+    height: -webkit-fill-available;
+    min-height: 540px;
+    padding-bottom: 25px;
+}
+
+#splashscreen {
+	background: #900000;
+	width: 100%;
+	height: 100vh;
+	position: fixed;
+    z-index: 99999999;
+}
+
+#splashscreen .logincont .logo path {
+	fill: #900000;
+}
+
+#loginscreen .logincont .logo path {
+	fill: #900000;
+}
+
+#loginscreen .logincont .logo {
+	width: 100%;
+	max-width: 240px;
+	margin: 40px auto 15px;
+	height: auto;
+}
+
+#loginscreen .logincont input {
+	margin: 0 0 15px;
+}
+
+#loginscreen .logincont {
+	text-align: center;
+}
+
+#loginscreen .logincont h1 {
+	font-family: 'Montserrat', sans-serif;
+	font-weight: 700;
+	font-size: 36px;
+	text-align: center;
+	color: #900000;
+	margin-bottom: 15px;
+}
+
+.btnLogin {
+	width: 100%;
+}
+
+.btn-primary {
+    border: 0;
+	font-weight: 700;
+}
+
+.btnLogin {
+	text-shadow: 2px 2px 5px rgba(0, 0, 0, .5);
+}
+
+.btn-primary:active, .btn-primary:focus, .btn-primary:hover {
+    box-shadow: none!important;
+    background-color: #900000!important;
+}
+
+.hidden {
+	display: none;
+}
+
+.titBlock {
+    font-size: 18px;
+    font-weight: bold;
+    margin-left: -15px;
+    margin-right: -15px;
+    padding: 10px 15px;
+}
+
+.app_back_inv {
+    background: #FFFFFF;
+}
+
+.app_back {
+    background: #900000;
+}
+
+.app_color, a.app_color {
+    color: #FFF;
+}
+
+.app_color_inv, a.app_color_inv {
+    color: #900000;
+}
+
+
+/* menu */ 
+
+div.menu {
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    overflow: auto;
+    background: rgba(57, 60, 64, .4);
+    position: absolute;
+    top:0;
+    left:-100%;
+    z-index: 9999999;
+}
+
+.menuopened {
+    height: 100vh;
+    overflow: hidden;
+}
+
+.mencont {
+    width: 80%;
+    height: 100%;
+    background: #393c40;
+}
+
+.btnCerrarM btnCerrarM {
+	padding: 20px!important;
+}
+
+.btnCerrarM svg  path {
+	fill: white;
+}
+
+.btnCerrarM {
+	color: #FFF;
+    opacity: 1;
+}
+
+div.menu .botones li.btnCerrarM a img, div.menu .botones li.btnCerrarM a svg {
+	height: 36px;
+	width: auto;
+	vertical-align: middle;
+    margin: 0 5px 0 15px;
+}
+
+div.menu .botones li.btnCerrarM {
+	padding: 0;
+}
+
+div.menu .botones li {
+	padding: 0 20px;
+}
+
+.menu li a .fa-angle-right {
+    float: right;
+}
+
+.menu li a .fa-power-off {
+    float: right;
+}
+
+div.menu .botones li.btnCerrarM a {
+	padding: 10px 0px;
+	display: block;
+	font-size: 14px;
+	text-decoration: none;
+}
+
+div.menu .botones li:not(.btnCerrarM) a {
+	padding: 10px 0px;
+	color: #FFF;
+	display: block;
+	font-size: 14px;
+	text-decoration: none;
+}
+
+button.btnMenu:focus {
+     outline: 0; 
+}
+
+.btnMenu {
+	width: 30px;
+	height: 30px;
+	position: absolute;
+	top: 15px;
+	left: 15px;
+	border: 0;
+	background: none;
+    font-size: 22px;
+    color: #FFF;
+	text-shadow: 2px 2px 5px rgba(0, 0, 0, .5);
+}
+
+.bannerHome {
+	background: center center no-repeat #900000;
+	background-size: cover;
+	width: 100%;
+	height: 200px;
+}
+
+.homeaccess {
+	border-bottom: 1px solid #900000;
+}
+
+.col-de-3.active a.iconhomeaccess {
+	color: #FFF;
+}
+
+.col-de-3.active {
+	background: #900000;
+}
+
+a.iconhomeaccess {
+	text-align: center;
+	font-size: 30px;
+	text-decoration: none;
+	width: 100%;
+    display: block;
+    height: 100%;
+    margin: 10px auto;
+}
+
+.col-de-3 {
+	float: left;
+	width: 25%; 
+	text-align: center;
+	padding: 0 0;
+}
+
+.logoCentral path {
+	fill: #900000;
+}
+
+.logoCentral {
+    width: auto;
+    margin: 0 auto;
+    top: 15%;
+    position: relative;
+    height: auto;
+    display: block;
+    max-width: 80vw;
+}
+
+.itemHomeBlock {
+    padding-top: 15px;
+	border-bottom: 1px solid #DDD;
+    padding-bottom: 15px;
+}
+
+.imgHomeBlock {
+    width: 30%;
+    height: 90px;
+    background: no-repeat center center;
+    background-size: cover;
+    float: left;
+}
+
+button.btn-xs {
+    padding: 1px 5px;
+    font-size: 12px;
+    line-height: 1.5;
+    border-radius: 3px;
+}
+
+.btnViewMore {
+    float: right;
+    text-shadow: none;
+    border-radius: 0!important;
+}
+
+.contHomeBlock {
+    padding-left: 10px;
+    float: left;
+    width: 70%;
+}
+
+.itemHomeBlock:after {
+    content: ' ';
+    clear: both;
+    display: block;
+}
+
+h4.subtitHomeBlock {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.ventanashomeCont {
+    margin: 0 -15px;
+    padding: 0 15px;
+    position: relative;
+    overflow-x: hidden;
+    height: -webkit-fill-available;
+}
+
+.ventanashome {
+    position: absolute;
+    width: 100%;
+	height: -webkit-fill-available;
+    left: 0;
+    top: 0;
+}
+
+.slidewind {
+    padding: 0 15px;
+    position: absolute;
+    width: 100%;
+    height: auto;
+    left: 0;
+}
+
+.btnSaveAlarm {
+	width: 100%;
+}
+
+.btnViewAllAlarms {
+	width: 100%;
+	text-align: center;
+	margin: 15px auto;
+}
+
+.btnViewAllMessages {
+	width: 100%;
+	text-align: center;
+	margin: 15px auto;
+}
+
+textarea#newmessage {
+    height: 110px;
+    resize: none;
+}
+
+.btnSendMessage {
+	width: 100%;
+}
+
+span.badge {
+    margin-top: -30px;
+    margin-left: -10px;
+}
+
+#map_hotel {
+	width: 100%;
+	height: 250px;
+}
+
+.infodata {
+	padding: 10px 0;
+	font-weight: bold;
+	font-size: 16px;
+}
+
+span.valinfo {
+    font-weight: normal;
+}
+
+.bg-red {
+    background: #E74C3C !important;
+    border: 1px solid #E74C3C !important;
+    color: #fff;
+}
+
+.checkbox label:after, 
+.radio label:after {
+    content: '';
+    display: table;
+    clear: both;
+}
+
+.checkbox .cr,
+.radio .cr {
+    position: relative;
+    display: inline-block;
+    border: 1px solid #a9a9a9;
+    border-radius: .25em;
+    width: 1.3em;
+    height: 1.3em;
+    float: left;
+    margin-right: .5em;
+}
+
+.radio .cr {
+    border-radius: 50%;
+}
+
+.checkbox .cr .cr-icon,
+.radio .cr .cr-icon {
+    position: absolute;
+    font-size: .8em;
+    line-height: 0;
+    top: 50%;
+    left: 20%;
+}
+
+.radio .cr .cr-icon {
+    margin-left: 0.04em;
+}
+
+.checkbox label input[type="checkbox"],
+.radio label input[type="radio"] {
+    display: none;
+}
+
+.checkbox label input[type="checkbox"] + .cr > .cr-icon,
+.radio label input[type="radio"] + .cr > .cr-icon {
+    transform: scale(3) rotateZ(-20deg);
+    opacity: 0;
+    transition: all .3s ease-in;
+}
+
+.checkbox label input[type="checkbox"]:checked + .cr > .cr-icon,
+.radio label input[type="radio"]:checked + .cr > .cr-icon {
+    transform: scale(1) rotateZ(0deg);
+    opacity: 1;
+}
+
+.checkbox label input[type="checkbox"]:disabled + .cr,
+.radio label input[type="radio"]:disabled + .cr {
+    opacity: .5;
+}
+
+#ventana_uno {
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    overflow: auto;
+    background: #FFF;
+    position: absolute;
+    top:0;
+    left:100%;
+    z-index: 9999999;
+}
+
+.titBlockInt {
+    font-weight: bold;
+    padding: 10px 15px;
+    font-size: 16px;
+}

@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="format-detection" content="telephone=no" />
+		<meta name="msapplication-tap-highlight" content="no" />
+		<meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
+
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="red">
+		<!-- This is a wide open CSP declaration. To lock this down for production, see below. -->
+		 <meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline'; style-src 'self' 'unsafe-inline'; media-src *" /> 
+		<!-- <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: 'unsafe-inline' https://ssl.gstatic.com; style-src 'self' 'unsafe-inline'; media-src *" /> -->
+	<!--
+		<meta http-equiv="Content-Security-Policy" content="default-src * gap://ready file:; style-src * 'self' 'unsafe-inline'; media-src *; img-src * 'self' data:; script-src * 'unsafe-inline' 'unsafe-eval';connect-src * 'self'; font-src * 'self' https://fonts.gstatic.com data:;">
+	-->
+		<link rel="shortcut icon" href="img/favicon.png"/>
+		<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+		<link rel="stylesheet" type="text/css" href="css/bootstrap-datetimepicker.css">
+		<link rel="stylesheet" type="text/css" href="css/font-awesome.css">
+		<link rel="stylesheet" type="text/css" href="css/index.css">
+		<title>Smart Bellboy</title>
+	</head>
+	<body>
+		<div class="container screenapp" id="splashscreen">
+			<div class="row">
+				<div class="col-md-12" style="text-align: center; line-height: 100vh;">
+					<img src="img/logo_white.svg" class="logoSplash" style="width: 80%; margin-top: -15px;    max-width: 360px;">
+				</div>
+			</div>
+		</div>
+		<div class="container screenapp hidden" id="loginscreen">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="logincont">
+						<img src="img/logo.svg" class="svg logo">
+						<h1>Smart Bellboy</h1>
+						<div>
+							<input type="text" class="form-control" id="username" name="username" placeholder="Username" required="">
+						</div>
+						<div>
+							<input type="password" class="form-control" id="userpass" name="userpass" placeholder="Password" required="">
+						</div>
+						<div id="loginError"></div>
+						<div>
+							<button type="submit" class="btn btn-primary app_back app_color btnLogin">Login</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="footer">
+				<p>©<span id="yearcopy" class="yearcopy">2018</span> All Rights Reserved.</p>
+			</div>
+		</div>
+		<div class="menu hidden" id="left-panel">
+			<div class="mencont">
+				<ul class="botones">
+					<li class="btnCerrarM app_back app_color"><a href="#" class="app_color" data-quien="menu"><span id="hotellogomenu"><img src="img/logo.svg" class="imageLogo svg"></span> <span id="hotelname">Hotel pepe</span></a></li>
+					<li><a href="#" class="linksMenu" data-item="Alarms">Alarms <i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
+					<li><a href="#" class="linksMenu" data-item="Menssages">Menssages <i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
+					<li><a href="#" class="linksMenu" data-item="Events">Events <i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
+					<li><a href="#" class="linksMenu" data-item="Activities">Activities <i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
+					<li><a href="#" class="linksMenu" data-item="Brochures">Brochures <i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
+					<li><a href="#" class="linksMenu" data-item="Calendar">Calendar <i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
+					<li><a href="#" class="linksMenu" data-item="Promotions">Promotions <i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
+					<li><a href="#" class="linksMenu" data-item="News">News <i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
+					<li><a href="#" class="linksMenu" data-item="Galery">Galery <i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
+					<li><a href="#" class="linksMenu" data-item="Logout">Logout <i class="fa fa-power-off" aria-hidden="true"></i></a></li>
+				</ul>
+			</div>
+		</div>
+		
+		<div class="container screenapp hidden" id="homescreen">
+		
+			<div class="row">
+				<div class="col-md-12 bannerHome">
+					<button type="button" class="btnMenu"><i class="fa fa-bars"></i></button>
+					<img src="img/logo.svg" class="svg logoCentral">
+				</div>
+				<div class="col-md-12 homeaccess">
+					<div class="row">
+						<div class="col-de-3 active">
+							<a href="#" class="app_color_inv iconhomeaccess" data-panel="home" id="homelinkhome" ><i class="fa fa-home"></i></a>
+						</div>
+						<div class="col-de-3">
+							<a href="#" class="app_color_inv iconhomeaccess" data-panel="alarms" id="alarmlnkhome"><i class="fa fa-clock-o"></i></a>
+						</div>
+						<div class="col-de-3">
+							<a href="#" class="app_color_inv iconhomeaccess" data-panel="messages" id="messageslinkhome"><i class="fa fa-envelope-o"></i></a>
+						</div>
+						<div class="col-de-3">
+							<a href="#" class="app_color_inv iconhomeaccess" data-panel="info" id="infohomeicon"><i class="fa fa-info"></i></a>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-12 contentsite">
+					<div class="ventanashomeCont">
+						<div class="ventanashome">
+							<div class="slidewind panel_home" style="left: 0;">
+								<div class="row" id="homeeventscont">
+									<div class="col-md-12">
+										<h3 class="titBlock app_back app_color">Next events</h3>
+										<div class="contnetblokhome eventsitems">
+											
+										</div>
+									</div>
+								</div>
+								<div class="row" id="homenewscont">
+									<div class="col-md-12">
+										<h3 class="titBlock app_back app_color">Last News</h3>
+										<div class="contnetblokhome newsitems">
+											
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="slidewind panel_alarms" style="left: 100%;">
+								<div class="row">
+									<div class="col-md-12">
+										<h3 class="titBlock app_back app_color">Create new Alarm</h3>
+										<button class="btn btn-primary btnViewAllAlarms app_back app_color" data-item="Alarms">View all alarms</button>
+										<form id="newalarm">
+											<div class="form-group">
+												<label for="datealarm">Date & time</label>
+												<input type="text" readonly class="form_datetime form-control" id="datealarm" name="datealarm" placeholder="Date & Time">
+											</div>
+											<div class="form-group">
+												<label for="alarmtype">Alarm type</label>
+												<select class="form-control" name="alarmtype" id="alarmtype"></select>
+											</div>
+											<div class="form-group">
+												<label for="alarmpriority">Priority</label>
+												<select class="form-control" name="alarmpriority" id="alarmpriority"></select>
+											</div>
+											<div class="form-group">
+												<div class="checkbox">
+													<label for="notify_phone" style="font-size: 1.5em">
+														<input type="checkbox" name="notify_phone" id="notify_phone" checked="checked" value="1" >
+														<span class="cr"><i class="cr-icon fa fa-check"></i></span>
+														Notify by Room Phone
+													</label>
+												</div>
+											</div>
+											<div class="form-group">
+												<div class="checkbox">
+													<label for="notify_cell" style="font-size: 1.5em">
+														<input type="checkbox" name="notify_cell" id="notify_cell" value="1" >
+														<span class="cr"><i class="cr-icon fa fa-check"></i></span>
+														Notify by CellPhone
+													</label>
+												</div>
+											</div>
+											<div class="form-group">
+												<div class="checkbox">
+													<label for="notify_email" style="font-size: 1.5em">
+														<input type="checkbox" name="notify_email" id="notify_email" value="1" >
+														<span class="cr"><i class="cr-icon fa fa-check"></i></span>
+														Notify by Email
+													</label>
+												</div>
+											</div>
+											<div class="form-group">
+												<div class="checkbox">
+													<label for="notify_push" style="font-size: 1.5em">
+														<input type="checkbox" name="notify_push" id="notify_push" checked="checked" value="1">
+														<span class="cr"><i class="cr-icon fa fa-check"></i></span>
+														Notify by Push notification
+													</label>
+												</div>
+											</div>
+											<div class="form-group">
+												<label for="notesalarm">Notes</label>
+												<textarea class="form-control" id="notesalarm" name="notesalarm" ></textarea>
+											</div>
+											<div class="form-group" id="resmes">
+											</div>
+											<div class="form-group">
+												<button type="button" class="btn btn-primary app_back app_color btnSaveAlarm">Save</button>
+											</div>
+										</form>
+									</div>
+								</div>
+							</div>
+							<div class="slidewind panel_messages" style="left: 200%;">
+								<div class="row">
+									<div class="col-md-12">
+										<h3 class="titBlock app_back app_color">Create new Message</h3>
+										<button class="btn btn-primary btnViewAllMessages app_back app_color" >View all messages</button>
+										<form id="formmessage">
+											<div class="form-group">
+												<label for="messagesubject">Subject</label>
+												<input type="text" class="form-control" id="messagesubject" name="messagesubject" >
+											</div>
+											<div class="form-group">
+												<label for="newmessage">Your Message</label>
+												<textarea class="form-control" id="newmessage" name="newmessage" ></textarea>
+											</div>
+											<div class="form-group" id="resmesm">
+											</div>
+											<div class="form-group">
+												<button type="button" class="btn btn-primary app_back app_color btnSendMessage">Send</button>
+											</div>
+										</form>
+									</div>
+								</div>
+							</div>
+							<div class="slidewind panel_info" style="left: 300%;">
+								<div class="row">
+									<div class="col-md-12">
+										<h3 class="titBlock app_back app_color">Hotel info</h3>
+										<div class="infodata hotel_phone" >
+											Phone: <span class="valinfo"></span>
+										</div>
+										<div class="infodata hotel_web" >
+											Web: <span class="valinfo"></span>
+										</div>
+										<div class="infodata hotel_email" >
+											Mail: <span class="valinfo"></span>
+										</div>
+										<div class="infodata hotel_desc" >
+											<span class="valinfo"></span>
+										</div>
+										<div id="map_hotel" class="col-md-12"></div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="footer">
+				<p>©<span class="yearcopy">2018</span> All Rights Reserved.</p>
+			</div>
+		</div>
+		<div class="container hidden" id="ventana_uno">
+			<div class="row">
+				<div class="col-md-12 sections_uno hidden" id="section_Alarms">
+					<h3 class="titBlockInt app_back app_color"><button class="btnBackSecUno"><i class="fa fa-arrow-left"></i></button> Alarms</h3>
+					<div class="itemsIntContent">
+					</div>
+				</div>
+				<div class="col-md-12 sections_uno hidden" id="section_Messages">
+					<h3 class="titBlockInt app_back app_color"><button class="btnBackSecUno"><i class="fa fa-arrow-left"></i></button> Menssages <button class="btnCreatenewMessage"><i class="fa fa-edit"></i></button></h3>
+					<div class="itemsIntContent">
+					</div>
+				</div>
+				<div class="col-md-12 sections_uno hidden" id="section_Events">
+					<h3 class="titBlockInt app_back app_color"><button class="btnBackSecUno"><i class="fa fa-arrow-left"></i></button> Events</button></h3>
+					<div class="itemsIntContent">
+					</div>
+				</div>
+				<div class="col-md-12 sections_uno hidden" id="section_Activities">
+					<h3 class="titBlockInt app_back app_color"><button class="btnBackSecUno"><i class="fa fa-arrow-left"></i></button> Activities</button></h3>
+					<div class="itemsIntContent">
+					</div>
+				</div>
+				<div class="col-md-12 sections_uno hidden" id="section_Brochures">
+					<h3 class="titBlockInt app_back app_color"><button class="btnBackSecUno"><i class="fa fa-arrow-left"></i></button> Brochures</button></h3>
+					<div class="itemsIntContent">
+					</div>
+				</div>
+			</div>		
+		</div>
+		<div class="container hidden" id="ventana_dos">
+			<div class="row">
+				<div class="col-md-12 sections_dos hidden" id="section_Alarm_int">
+					<h3 class="titBlockInt app_back app_color"><button class="btnBackSecDos"><i class="fa fa-arrow-left"></i></button> <span class="titleElement"></span></h3>
+					<div class="itemsIntContent">
+					</div>
+				</div>
+				<div class="col-md-12 sections_dos hidden" id="section_Message_int">
+					<h3 class="titBlockInt app_back app_color"><button class="btnBackSecDos"><i class="fa fa-arrow-left"></i></button> <span class="titleElement"></span></h3>
+					<div class="itemsIntContent">
+					</div>
+				</div>
+				<div class="col-md-12 sections_dos hidden" id="section_Event_int">
+					<h3 class="titBlockInt app_back app_color"><button class="btnBackSecDos"><i class="fa fa-arrow-left"></i></button> <span class="titleElement"></span></h3>
+					<div class="itemsIntContent">
+					</div>
+				</div>
+				<div class="col-md-12 sections_dos hidden" id="section_Activity_int">
+					<h3 class="titBlockInt app_back app_color"><button class="btnBackSecDos"><i class="fa fa-arrow-left"></i></button> <span class="titleElement"></span></h3>
+					<div class="itemsIntContent">
+					</div>
+				</div>
+				<div class="col-md-12 sections_dos hidden" id="section_Brochure_int">
+					<h3 class="titBlockInt app_back app_color"><button class="btnBackSecDos"><i class="fa fa-arrow-left"></i></button> <span class="titleElement"></span></h3>
+					<div class="itemsIntContent">
+					</div>
+				</div>
+			</div>		
+		</div>
+		<script type="text/javascript" src="cordova.js"></script>
+		<script type="text/javascript" src="js/jquery-2.1.1.min.js"></script>
+		<script type="text/javascript" src="js/jquery.touchSwipe.min.js"></script>
+		<script type="text/javascript" src="js/bootstrap.js"></script>
+		<script type="text/javascript" src="js/bootstrap-datetimepicker.js"></script>
+		<script type="text/javascript" src="js/photoswipe.min.js"></script>
+		<script type="text/javascript" src="js/photoswipe-ui-default.min.js"></script>
+		<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAxZ8eRh-497KEVJzpygWiyZSXHqo2O0lM"></script>
+		<script type="text/javascript" src="js/index.js"></script>
+		<script type="text/javascript">
+			window.onerror = function(message, url, lineNumber) {
+				//~ alert("Error: "+message+" in "+url+" at line "+lineNumber);
+			}
+			app.initialize();
+		</script>
+	</body>
+</html>
