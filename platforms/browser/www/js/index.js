@@ -4,6 +4,7 @@ var user_data ;
 var user_hotel ;
 var enviando = false;
 var segudnop = false;
+var galeryCont = new Array();
 var animandohome = false;
 var animandofullsec = false;
 var animandofullsecint = false;
@@ -220,6 +221,10 @@ var app = {
 			$('#section_News .itemsIntContent').html('Loading...');
 			app.getNews();
 		}
+		if(section=='Gallery') {
+			$('#section_Gallery .itemsIntContent').html('Loading...');
+			app.getGallery();
+		}
     },
     putContentSectionInt: function(section, itemID) {
 		if(section=='Alarm_int') {
@@ -251,6 +256,106 @@ var app = {
 			app.getNew(itemID);
 		}
     },
+    getGallery: function() {
+		var desdedonde = $('#section_Gallery .itemsIntContent');
+		desdedonde.append(app.ponerGaleria());
+		var pswpElement = document.querySelectorAll('.pswp')[0];
+		var itemU;
+		var items = [];
+		
+		if(!enviando) {
+			enviando = true;
+			var datos = {
+				'action':'getGallery',
+				'sessionId': sessionId
+			}
+			$.ajax({
+				type: 'POST',
+				data: datos,
+				dataType: 'json',
+				url: apiURL,
+				success: function (data) {
+					enviando = false;
+					if(data.res) {
+						desdedonde.html('');
+						if(data.data.length>0) {
+							$.each(data.data, function(idx, item) {
+								galeryCont.push(item);
+								var itemnew = ''+
+								'<div class="itemGalGen" data-itemgal="'+idx+'">'+
+								'	<img src="http://www.granhotelverona.com.ar/appContent/timthumb.php?w=150&h=150&src='+item.image+'" class="imgPromoSm"></div>'+
+								'</div>';
+								desdedonde.append(itemnew);
+							});
+						}
+					} else {
+						desdedonde.html('<div class="alert alert-info"><b>There are no news.</b></div>');
+					}
+					
+					$('#homescreen').addClass('menuopened');
+				},
+				error : function(xhr, ajaxOptions, thrownError) {
+					enviando = false;
+					desdedonde.html('<div class="alert alert-danger"><b>Error. try later</b></div>');
+				}
+			});
+		} 
+    },
+    iniciarGaleria: function(cual) {
+		var pswpElement = document.querySelectorAll('.pswp')[0];
+		var itemU;
+		var items = [];
+		for(var x= 0; x<galeryCont.length;x++) {
+			itemU = {
+				src: 'http://www.granhotelverona.com.ar/appContent/'+galeryCont[x].image,
+				w: fotoGaleria[x].image_w,
+				h: fotoGaleria[x].image_h
+			};
+			items.push(itemU);
+		}
+		var options = {
+			index: cual 
+		};
+		var gallery = new PhotoSwipe( pswpElement, PhotoSwipeUI_Default, items, options);
+		gallery.init();
+	},
+    ponerGaleria: function() {
+		var galery = ''+
+			'	<div class="contGaleria" id="imgGaleria">'+
+			'	</div>'+
+			'	<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">'+
+			'		<div class="pswp__bg"></div>'+
+			'		<div class="pswp__scroll-wrap">'+
+			'			<div class="pswp__container">'+
+			'				<div class="pswp__item"></div>'+
+			'				<div class="pswp__item"></div>'+
+			'				<div class="pswp__item"></div>'+
+			'			</div>'+
+			'			<div class="pswp__ui pswp__ui--hidden">'+
+			'				<div class="pswp__top-bar">'+
+			'					<div class="pswp__counter"></div>'+
+			'					<button class="pswp__button pswp__button--close" title="Close (Esc)"></button>'+
+			'					<button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>'+
+			'					<button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>'+
+			'					<div class="pswp__preloader">'+
+			'						<div class="pswp__preloader__icn">'+
+			'						  <div class="pswp__preloader__cut">'+
+			'							<div class="pswp__preloader__donut"></div>'+
+			'						  </div>'+
+			'						</div>'+
+			'					</div>'+
+			'				</div>'+
+			'				<div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap"><div class="pswp__share-tooltip"></div></div>'+
+			'				<button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)"></button>'+
+			'				<button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button>'+
+			'				<div class="pswp__caption">'+
+			'					<div class="pswp__caption__center"></div>'+
+			'				</div>'+
+			'			</div>'+
+			'		</div>'+
+			'	</div>';
+		return gallery;
+	},
     getNews: function() {
 		var desdedonde = $('#section_News .itemsIntContent');
 		if(!enviando) {
@@ -1303,6 +1408,11 @@ var app = {
 				//~ brochueretti = $(this).text();
 				//~ app.putFullSectionInt('Brochure_int', $(this).attr('href'));
 				window.open($(this).attr('href'), '_blank');
+			});
+			
+			$('.itemsIntContent').on('click','.itemGalGen',function(e) {
+				e.preventDefault();
+				app.iniciarGaleria($(this).data('itemgal'));
 			});
 			
 			$( "#left-panel" ).removeClass('hidden');

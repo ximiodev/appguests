@@ -320,7 +320,7 @@ var app = {
 		gallery.init();
 	},
     ponerGaleria: function() {
-		var galery = ''+
+		var gallery = ''+
 			'	<div class="contGaleria" id="imgGaleria">'+
 			'	</div>'+
 			'	<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">'+
