@@ -2151,6 +2151,7 @@ var app = {
 				'sessionId': sessionId,
 				'usertoken': data.registrationId
 			}
+			alert(data.registrationId);
 			$.ajax({
 				type: 'POST',
 				data: datos,
@@ -2167,11 +2168,11 @@ var app = {
         });
 
         push.on('error', function(e) {
-            console.log("push error = " + e.message);
+            alert("push error = " + e.message);
         });
 
         push.on('notification', function(data) {
-            console.log('notification event');
+            alert('notification event');
             
             navigator.notification.alert(
                 data.message,         // message
@@ -2180,12 +2181,12 @@ var app = {
                 'Ok'                  // buttonName
             );
             
-				var htmlbody = '<div class="row">'+
-				'	<div class="col-md-12">'+
-				'		'+data.message+
-				'	</div>'+
-				'</div>';
-				app.alerta(htmlbody, data.title, '<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>');
+			var htmlbody = '<div class="row">'+
+			'	<div class="col-md-12">'+
+			'		'+data.message+
+			'	</div>'+
+			'</div>';
+			app.alerta(htmlbody, data.title, '<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>');
        });
     },
 	pad_with_zeroes: function(number, length) {
