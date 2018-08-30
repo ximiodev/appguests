@@ -69,7 +69,6 @@
 					<li><a href="#" class="linksMenu" data-item="Promotions">Promotions <i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
 					<li><a href="#" class="linksMenu" data-item="News">News <i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
 					<li><a href="#" class="linksMenu" data-item="Gallery">Galery <i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
-					<li><a href="#" class="linksMenu" data-item="Rating">Rate Us <i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
 					<li><a href="#" class="linksMenu" data-item="Logout">Logout <i class="fa fa-power-off" aria-hidden="true"></i></a></li>
 				</ul>
 			</div>
@@ -106,9 +105,9 @@
 									<div class="col-md-12">
 										<h3 class="titBlock app_back app_color">Quick Acctions</h3>
 										<div class="contnetblokhome eventsitems quickaccess">
-											<a href="#" class="iconquickaccessLink" data-action="Shop"><div class="iconquickaccess app_back app_color"><i class="fa fa-shopping-cart"></i></div><div class="minidesc">Shop</div></a>
-											<a href="#" class="iconquickaccessLink" data-action="Promotions"><div class="iconquickaccess app_back app_color"><i class="fa fa-ticket"></i></div><div class="minidesc">Promotions</div></a>
-											<a href="#" class="iconquickaccessLink" data-action="Brochures"><div class="iconquickaccess app_back app_color"><i class="fa fa-map"></i></div><div class="minidesc">Brochures</div></a>
+											<a href="#" class="iconquickaccess app_back app_color" data-action="Shop"><i class="fa fa-shopping-cart"></i><div class="minidesc">Shop</div></a>
+											<a href="#" class="iconquickaccess app_back app_color" data-action="Promotions"><i class="fa fa-ticket"></i><div class="minidesc">Promotions</div></a>
+											<a href="#" class="iconquickaccess app_back app_color" data-action="Brochures"><i class="fa fa-map"></i><div class="minidesc">Brochures</div></a>
 										</div>
 									</div>
 								</div>
@@ -300,53 +299,6 @@
 				<div class="col-md-12 sections_uno hidden" id="section_Shop">
 					<h3 class="titBlockInt app_back app_color"><button class="btnBackSecUno"><i class="fa fa-arrow-left"></i></button> Room Service & Shop</button></h3>
 					<div class="itemsIntContent">
-					</div>
-				</div>
-				<div class="col-md-12 sections_uno hidden" id="section_Rating">
-					<h3 class="titBlockInt app_back app_color"><button class="btnBackSecUno"><i class="fa fa-arrow-left"></i></button> Rate aour Services</button></h3>
-					<div class="itemsIntContent">
-						<table class="tablerate app_color_inv">
-							<tr>
-								<td><span class="titRate"><i class="fa fa-coffee app_color_inv"></i> Breakfast</span></td>
-								<td>
-									<span class="fa fa-star checked"></span>
-									<span class="fa fa-star checked"></span>
-									<span class="fa fa-star checked"></span>
-									<span class="fa fa-star"></span>
-									<span class="fa fa-star"></span>
-								</td>
-							</tr>
-							<tr>
-								<td><span class="titRate"><i class="fa fa-cutlery app_color_inv"></i> Food &amp; Drinks</span></td>
-								<td>
-									<span class="fa fa-star checked"></span>
-									<span class="fa fa-star checked"></span>
-									<span class="fa fa-star checked"></span>
-									<span class="fa fa-star"></span>
-									<span class="fa fa-star"></span>
-								</td>
-							</tr>
-							<tr>
-								<td><span class="titRate"><i class="fa fa-bed app_color_inv"></i> Room</span></td>
-								<td>
-									<span class="fa fa-star checked"></span>
-									<span class="fa fa-star checked"></span>
-									<span class="fa fa-star checked"></span>
-									<span class="fa fa-star"></span>
-									<span class="fa fa-star"></span>
-								</td>
-							</tr>
-							<tr>
-								<td><span class="titRate"><i class="fa fa-building-o app_color_inv"></i> Services</span></td>
-								<td>
-									<span class="fa fa-star checked"></span>
-									<span class="fa fa-star checked"></span>
-									<span class="fa fa-star checked"></span>
-									<span class="fa fa-star"></span>
-									<span class="fa fa-star"></span>
-								</td>
-							</tr>
-						</table>
 					</div>
 				</div>
 			</div>		

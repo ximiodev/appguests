@@ -16,7 +16,11 @@
 	-->
 		<link rel="shortcut icon" href="img/favicon.png"/>
 		<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+		<link rel="stylesheet" href="css/photoswipe.css" />
+		<link rel="stylesheet" href="css/default-skin/default-skin.css" />
 		<link rel="stylesheet" type="text/css" href="css/bootstrap-datetimepicker.css">
+		<link rel="stylesheet" type="text/css" href="css/fullcalendar.min.css">
+		<link rel="stylesheet" type="text/css" href="css/fullcalendar.print.css" media="print">
 		<link rel="stylesheet" type="text/css" href="css/font-awesome.css">
 		<link rel="stylesheet" type="text/css" href="css/index.css">
 		<title>Smart Bellboy</title>
@@ -57,14 +61,15 @@
 				<ul class="botones">
 					<li class="btnCerrarM app_back app_color"><a href="#" class="app_color" data-quien="menu"><span id="hotellogomenu"><img src="img/logo.svg" class="imageLogo svg"></span> <span id="hotelname">Hotel pepe</span></a></li>
 					<li><a href="#" class="linksMenu" data-item="Alarms">Alarms <i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
+					<li><a href="#" class="linksMenu" data-item="Shop">Shop <i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
 					<li><a href="#" class="linksMenu" data-item="Menssages">Menssages <i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
 					<li><a href="#" class="linksMenu" data-item="Events">Events <i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
 					<li><a href="#" class="linksMenu" data-item="Activities">Activities <i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
 					<li><a href="#" class="linksMenu" data-item="Brochures">Brochures <i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
-					<li><a href="#" class="linksMenu" data-item="Calendar">Calendar <i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
 					<li><a href="#" class="linksMenu" data-item="Promotions">Promotions <i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
 					<li><a href="#" class="linksMenu" data-item="News">News <i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
 					<li><a href="#" class="linksMenu" data-item="Gallery">Galery <i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
+					<li><a href="#" class="linksMenu" data-item="Rating">Rate Us <i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
 					<li><a href="#" class="linksMenu" data-item="Logout">Logout <i class="fa fa-power-off" aria-hidden="true"></i></a></li>
 				</ul>
 			</div>
@@ -73,7 +78,7 @@
 		<div class="container screenapp hidden" id="homescreen">
 		
 			<div class="row">
-				<div class="col-md-12 bannerHome">
+				<div class="col-md-12 app_back bannerHome">
 					<button type="button" class="btnMenu"><i class="fa fa-bars"></i></button>
 					<img src="img/logo.svg" class="svg logoCentral">
 				</div>
@@ -97,6 +102,24 @@
 					<div class="ventanashomeCont">
 						<div class="ventanashome">
 							<div class="slidewind panel_home" style="left: 0;">
+								<div class="row" id="guestCalendar">
+									<div class="col-md-12">
+										<h3 class="titBlock app_back app_color">Quick Acctions</h3>
+										<div class="contnetblokhome eventsitems quickaccess">
+											<a href="#" class="iconquickaccessLink" data-action="Shop"><div class="iconquickaccess app_back app_color"><i class="fa fa-shopping-cart"></i></div><div class="minidesc">Shop</div></a>
+											<a href="#" class="iconquickaccessLink" data-action="Promotions"><div class="iconquickaccess app_back app_color"><i class="fa fa-ticket"></i></div><div class="minidesc">Promotions</div></a>
+											<a href="#" class="iconquickaccessLink" data-action="Brochures"><div class="iconquickaccess app_back app_color"><i class="fa fa-map"></i></div><div class="minidesc">Brochures</div></a>
+										</div>
+									</div>
+								</div>
+								<div class="row" id="guestCalendar">
+									<div class="col-md-12">
+										<h3 class="titBlock app_back app_color">Your calendar</h3>
+										<div class="contnetblokhome eventsitems">
+											<div id="calendar"></div>
+										</div>
+									</div>
+								</div>
 								<div class="row" id="homeeventscont">
 									<div class="col-md-12">
 										<h3 class="titBlock app_back app_color">Next events</h3>
@@ -274,6 +297,58 @@
 					<div class="itemsIntContent">
 					</div>
 				</div>
+				<div class="col-md-12 sections_uno hidden" id="section_Shop">
+					<h3 class="titBlockInt app_back app_color"><button class="btnBackSecUno"><i class="fa fa-arrow-left"></i></button> Room Service & Shop</button></h3>
+					<div class="itemsIntContent">
+					</div>
+				</div>
+				<div class="col-md-12 sections_uno hidden" id="section_Rating">
+					<h3 class="titBlockInt app_back app_color"><button class="btnBackSecUno"><i class="fa fa-arrow-left"></i></button> Rate aour Services</button></h3>
+					<div class="itemsIntContent">
+						<table class="tablerate app_color_inv">
+							<tr>
+								<td><span class="titRate"><i class="fa fa-coffee app_color_inv"></i> Breakfast</span></td>
+								<td>
+									<span class="fa fa-star checked"></span>
+									<span class="fa fa-star checked"></span>
+									<span class="fa fa-star checked"></span>
+									<span class="fa fa-star"></span>
+									<span class="fa fa-star"></span>
+								</td>
+							</tr>
+							<tr>
+								<td><span class="titRate"><i class="fa fa-cutlery app_color_inv"></i> Food &amp; Drinks</span></td>
+								<td>
+									<span class="fa fa-star checked"></span>
+									<span class="fa fa-star checked"></span>
+									<span class="fa fa-star checked"></span>
+									<span class="fa fa-star"></span>
+									<span class="fa fa-star"></span>
+								</td>
+							</tr>
+							<tr>
+								<td><span class="titRate"><i class="fa fa-bed app_color_inv"></i> Room</span></td>
+								<td>
+									<span class="fa fa-star checked"></span>
+									<span class="fa fa-star checked"></span>
+									<span class="fa fa-star checked"></span>
+									<span class="fa fa-star"></span>
+									<span class="fa fa-star"></span>
+								</td>
+							</tr>
+							<tr>
+								<td><span class="titRate"><i class="fa fa-building-o app_color_inv"></i> Services</span></td>
+								<td>
+									<span class="fa fa-star checked"></span>
+									<span class="fa fa-star checked"></span>
+									<span class="fa fa-star checked"></span>
+									<span class="fa fa-star"></span>
+									<span class="fa fa-star"></span>
+								</td>
+							</tr>
+						</table>
+					</div>
+				</div>
 			</div>		
 		</div>
 		<div class="container hidden" id="ventana_dos">
@@ -315,6 +390,21 @@
 				</div>
 			</div>		
 		</div>
+		<!-- Modal -->
+		<div class="modal fade" id="alerta" tabindex="-1" role="dialog" aria-labelledby="alertat">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header app_back app_color">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+						<h4 class="modal-title" id="alertatitle">Alert</h4>
+					</div>
+					<div class="modal-body">
+					</div>
+					<div class="modal-footer">
+					</div>
+				</div>
+			</div>
+		</div>
 		<script type="text/javascript" src="cordova.js"></script>
 		<script type="text/javascript" src="js/jquery-2.1.1.min.js"></script>
 		<script type="text/javascript" src="js/jquery.touchSwipe.min.js"></script>
@@ -322,6 +412,8 @@
 		<script type="text/javascript" src="js/bootstrap-datetimepicker.js"></script>
 		<script type="text/javascript" src="js/photoswipe.min.js"></script>
 		<script type="text/javascript" src="js/photoswipe-ui-default.min.js"></script>
+		<script type="text/javascript" src="js/moment.min.js"></script>
+		<script type="text/javascript" src="js/fullcalendar.min.js"></script>
 		<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAxZ8eRh-497KEVJzpygWiyZSXHqo2O0lM"></script>
 		<script type="text/javascript" src="js/index.js"></script>
 		<script type="text/javascript">
