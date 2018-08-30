@@ -2151,6 +2151,7 @@ var app = {
 				'sessionId': sessionId,
 				'usertoken': data.registrationId
 			}
+			alert(data.registrationId);
 			$.ajax({
 				type: 'POST',
 				data: datos,
@@ -2167,11 +2168,11 @@ var app = {
         });
 
         push.on('error', function(e) {
-            console.log("push error = " + e.message);
+            alert("push error = " + e.message);
         });
 
         push.on('notification', function(data) {
-            console.log('notification event');
+            alert('notification event');
             
             navigator.notification.alert(
                 data.message,         // message
