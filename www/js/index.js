@@ -2151,7 +2151,6 @@ var app = {
 				'sessionId': sessionId,
 				'usertoken': data.registrationId
 			}
-			alert(data.registrationId);
 			$.ajax({
 				type: 'POST',
 				data: datos,
@@ -2172,14 +2171,6 @@ var app = {
         });
 
         push.on('notification', function(data) {
-            alert('notification event');
-            
-            navigator.notification.alert(
-                data.message,         // message
-                null,                 // callback
-                data.title,           // title
-                'Ok'                  // buttonName
-            );
             
 			var htmlbody = '<div class="row">'+
 			'	<div class="col-md-12">'+
