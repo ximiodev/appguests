@@ -2181,12 +2181,12 @@ var app = {
                 'Ok'                  // buttonName
             );
             
-				var htmlbody = '<div class="row">'+
-				'	<div class="col-md-12">'+
-				'		'+data.message+
-				'	</div>'+
-				'</div>';
-				app.alerta(htmlbody, data.title, '<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>');
+			var htmlbody = '<div class="row">'+
+			'	<div class="col-md-12">'+
+			'		'+data.message+
+			'	</div>'+
+			'</div>';
+			app.alerta(htmlbody, data.title, '<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>');
        });
     },
 	pad_with_zeroes: function(number, length) {
