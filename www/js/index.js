@@ -163,6 +163,7 @@ var app = {
 					secTipo = 1;
 				});
 				app.putContentSection(cualsec);
+				$('#homescreen').addClass('menuopened');
 			}
 		} else {
 			app.logOut();
@@ -238,6 +239,12 @@ var app = {
 		if(section=='Shop') {
 			$('#section_Shop .itemsIntContent').html('Loading...');
 			app.getShop();
+		}
+		if(section=='Rating') {
+			setTimeout(function() {
+				$('#homescreen').addClass('menuopened');
+				console.log("poasd");
+			}, 400);
 		}
     },
     putContentSectionInt: function(section, itemID) {
@@ -1059,6 +1066,56 @@ var app = {
 			}, 2000);
 		}
     },
+    rankearApp: function(type, value, rname) {
+		var error = false;
+		var errorMsg = '';
+		if(!error && !enviando) {
+			enviando = true;
+			var datos = {
+				'action':'rankApp',
+				'sessionId': sessionId,
+				'textdata': $('#rate_hotel_text').val(),
+				'type': type,
+				'value': value
+			}
+			$.ajax({
+				type: 'POST',
+				data: datos,
+				dataType: 'json',
+				url: apiURL,
+				success: function (data) {
+					if(data.res) {
+						$('#resmeseve2').html('<div class="alert alert-success"><b>Thanks for rate us!.</b></div>');
+						
+						$('#rate_type_'+type+' .rate_stars').html('');
+						for(var i=1;i<=5;i++) {
+							var ischeck = (i<=value)?' checked':'';
+							$('#rate_type_'+type+' .rate_stars').append('									<span class="fa fa-star'+ischeck+'" data-star="'+i+'" data-type="'+type+'" data-rname="'+rname+'"></span>');
+						}
+						setTimeout(function() {
+							$('#resmeseve2').html('');
+							$('#alerta').modal('hide');
+							enviando = false;
+						}, 2000);
+					} else {
+						enviando = false;
+						$('#resmeseve2').html('<div class="alert alert-danger"><b>Error try later.</b></div>');
+						setTimeout(function() {
+							$('#resmeseve2').html('');
+						}, 2000);
+					}
+				},
+				error : function(xhr, ajaxOptions, thrownError) {
+					enviando = false;
+					$('#resmeseve2').html('<div class="alert alert-danger"><b>Error try later.</b></div>');
+					setTimeout(function() {
+						$('#resmeseve2').html('');
+					}, 2000);
+				}
+			});
+		} else {
+		}
+    },
     sendMessage: function() {
 		var error = false;
 		var errorMsg = '';
@@ -1358,6 +1415,18 @@ var app = {
 		} else {
 			$('#homenewscont').remove();
 		}
+		
+		if(user_hotel.ratings.length>0) {
+			$.each(user_hotel.ratings, function(idx, item) {
+				var numrating = item.rating;
+				$('#rate_type_'+item.type+' .rate_stars').html('');
+				for(var i=1;i<=5;i++) {
+					var ischeck = (i<=numrating)?' checked':'';
+					$('#rate_type_'+item.type+' .rate_stars').append('									<span class="fa fa-star'+ischeck+'" data-star="'+i+'" data-type="'+item.type+'" data-rname="'+item.rate_name+'"></span>');
+				}
+			});
+		}
+		
 		var optionsSel = '';
 		if(user_hotel.alarms.priotitys.length>0) {
 			optionsSel = '';
@@ -1720,6 +1789,11 @@ var app = {
 				app.putFullSection($(this).data('item'));
 			});
 			
+			$('.btnRateServices').click(function(e) {
+				e.preventDefault();
+				app.putFullSection('Rating');
+			});
+			
 			$('.iconquickaccessLink').click(function(e) {
 				e.preventDefault();
 				app.putFullSection($(this).data('action'));
@@ -1954,6 +2028,34 @@ var app = {
 				app.iniciarGaleria($(this).data('itemgal'));
 			});
 			
+			$('.itemsIntContent').on('click','.rate_stars .fa',function(e) {
+				e.preventDefault();
+				var itemnew = '<b>Rate '+$(this).data('rname')+'</b><br>';
+				for(var i=1;i<=5;i++) {
+					var ischeck = (i<=$(this).data('star'))?' checked':'';
+					itemnew += '<span class="fa fa-star'+ischeck+'" ></span>';
+				}
+				
+				var htmlbody = '<div class="row">'+
+				'	<div class="col-md-12">'+
+				'		'+itemnew+
+				'	</div>'+
+				'	<div class="col-md-12">'+
+				'		<textarea class="form-control" type="text" id="rate_hotel_text" placeholder="Notes"></textarea>'+
+				'	</div>'+
+				'	<div class="col-md-12">'+
+				'		<div class="form-group" id="resmeseve2">'+
+				'		</div>'+
+				'	</div>'+
+				'</div>';
+				app.alerta(htmlbody, 'Rate '+$(this).data('rname'), '<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button><button type="button" class="btn btn-primary app_back app_color sendthisrate" data-star="'+$(this).data('star')+'" data-rname="'+$(this).data('rname')+'" data-type="'+$(this).data('type')+'">Rate</button>');
+			});
+			
+			$('#alerta').on('click','.sendthisrate',function(e) {
+				e.preventDefault();
+				app.rankearApp($(this).data('type'),$(this).data('star'),$(this).data('rname'));
+			});
+			
 			$( "#left-panel" ).removeClass('hidden');
     
 			$('.btnCerrarM a').click(function(e) {
@@ -2044,13 +2146,24 @@ var app = {
                 localStorage.setItem('registrationId', data.registrationId);
                 // Post registrationId to your app server as the value has changed
             }
+            var datos = {
+				'action':'saveTokenUser',
+				'sessionId': sessionId,
+				'usertoken': data.registrationId
+			}
+			$.ajax({
+				type: 'POST',
+				data: datos,
+				dataType: 'json',
+				url: apiURL,
+				success: function (data) {
+					if(data.res) {
+					}
+				},
+				error : function(xhr, ajaxOptions, thrownError) {
+				}
+			});
 
-            var parentElement = document.getElementById('registration');
-            var listeningElement = parentElement.querySelector('.waiting');
-            var receivedElement = parentElement.querySelector('.received');
-
-            listeningElement.setAttribute('style', 'display:none;');
-            receivedElement.setAttribute('style', 'display:block;');
         });
 
         push.on('error', function(e) {
@@ -2059,12 +2172,20 @@ var app = {
 
         push.on('notification', function(data) {
             console.log('notification event');
+            
             navigator.notification.alert(
                 data.message,         // message
                 null,                 // callback
                 data.title,           // title
                 'Ok'                  // buttonName
             );
+            
+				var htmlbody = '<div class="row">'+
+				'	<div class="col-md-12">'+
+				'		'+data.message+
+				'	</div>'+
+				'</div>';
+				app.alerta(htmlbody, data.title, '<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>');
        });
     },
 	pad_with_zeroes: function(number, length) {
@@ -2085,7 +2206,13 @@ function initMap(lat,lng) {
 	var puntiohotel = {lat: lat, lng: lng};
 	thmap = new google.maps.Map(document.getElementById('map_hotel'), {
 		zoom: 14,
-		center:puntiohotel
+		center:puntiohotel,
+		zoomControl: false,
+		mapTypeControl: false,
+		scaleControl: false,
+		streetViewControl: false,
+		rotateControl: false,
+		fullscreenControl: false
 	});
 	
 	var marker = new google.maps.Marker({

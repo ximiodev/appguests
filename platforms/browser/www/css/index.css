@@ -723,7 +723,7 @@ a.iconquickaccessLink {
 }
 
 table.tablerate td {
-	padding: 15px;
+	padding: 15px 5px;
 }
 
 table.tablerate {
@@ -742,4 +742,14 @@ table.tablerate {
 
 span.fa.fa-star.checked {
     color: orange;
+}
+
+.rate_stars span.fa.fa-star {
+    font-size: 18px;
+    margin: 0 2px;
+}
+
+.btnRateServices {
+    width: 100%;
+    margin: 15px auto;
 }
