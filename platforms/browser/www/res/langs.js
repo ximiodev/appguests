@@ -1,9 +1,7 @@
-var global_lang;
 var language = {
 	getStr: function(str, defaultStr) {
-        global_lang = defLang;
 		var lango;
-		switch(global_lang) {
+		switch(defLang) {
 			case 'es':
 				lango = es;
 				break;
