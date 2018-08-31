@@ -70,7 +70,7 @@ var app = {
     },
     cambiarIdioma: function() {
 		var lkey;
-		translator = new Language();
+		translator = language;
 		$('[data-textlang!=""]').each(function( index ) {
 			lkey = $(this).data('textlang');
 			if(lkey!=undefined) {

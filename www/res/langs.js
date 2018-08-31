@@ -1,12 +1,7 @@
-var global_lang
-function Language(lang)
-{
-    var __construct = function() {
+var global_lang;
+var language = {
+	getStr: function(str, defaultStr) {
         global_lang = defLang;
-        return;
-    }()
-
-    this.getStr = function(str, defaultStr) {
 		var lango;
 		switch(global_lang) {
 			case 'es':
