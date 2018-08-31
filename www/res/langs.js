@@ -1,25 +1,3 @@
-var language = {
-	getStr: function(str, defaultStr) {
-		var lango;
-		switch(defLang) {
-			case 'es':
-				lango = es;
-				break;
-			default:
-				lango = en;
-		}
-        var retStr = lango[str];
-        if (retStr != 'undefined'){
-            return retStr;
-        } else {
-            if (defaultStr != 'undefined') {
-                return defaultStr;
-            } else {
-                return str;
-            }
-        }
-    }
-}
 
 var en = {
     all_right_reserv:"All Rights Reserved.",
