@@ -753,3 +753,11 @@ span.fa.fa-star.checked {
     width: 100%;
     margin: 15px auto;
 }
+
+.settings_cont {
+    padding: 15px;
+}
+
+.settings_cont label {
+    font-size: 18px;
+}

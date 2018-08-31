@@ -36,6 +36,9 @@
         },
         "cordova-plugin-device": {
             "PACKAGE_NAME": "com.ximiodev.smartbellboy"
+        },
+        "cordova-plugin-globalization": {
+            "PACKAGE_NAME": "com.ximiodev.smartbellboy"
         }
     },
     "dependent_plugins": {},
@@ -101,6 +104,34 @@
             "id": "cordova-plugin-device.DeviceProxy",
             "pluginId": "cordova-plugin-device",
             "runs": true
+        },
+        {
+            "file": "plugins/cordova-plugin-globalization/www/GlobalizationError.js",
+            "id": "cordova-plugin-globalization.GlobalizationError",
+            "pluginId": "cordova-plugin-globalization",
+            "clobbers": [
+                "window.GlobalizationError"
+            ]
+        },
+        {
+            "file": "plugins/cordova-plugin-globalization/www/globalization.js",
+            "id": "cordova-plugin-globalization.globalization",
+            "pluginId": "cordova-plugin-globalization",
+            "clobbers": [
+                "navigator.globalization"
+            ]
+        },
+        {
+            "file": "plugins/cordova-plugin-globalization/www/browser/moment.js",
+            "id": "cordova-plugin-globalization.moment",
+            "pluginId": "cordova-plugin-globalization",
+            "runs": true
+        },
+        {
+            "file": "plugins/cordova-plugin-globalization/src/browser/GlobalizationProxy.js",
+            "id": "cordova-plugin-globalization.GlobalizationProxy",
+            "pluginId": "cordova-plugin-globalization",
+            "runs": true
         }
     ],
     "plugin_metadata": {
@@ -109,6 +140,7 @@
         "cordova-plugin-console": "1.0.7",
         "cordova-plugin-dialogs": "1.2.1",
         "cordova-plugin-whitelist": "1.2.2",
-        "cordova-plugin-device": "1.1.7"
+        "cordova-plugin-device": "1.1.7",
+        "cordova-plugin-globalization": "1.11.0"
     }
 }

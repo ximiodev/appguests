@@ -1,7 +1,8 @@
 var secTipo = 0;
 var user_platform ;
-var user_data ;
-var user_hotel ;
+var user_data;
+var user_hotel;
+var defLang;
 var enviando = false;
 var segudnop = false;
 var galeryCont = new Array();
@@ -24,6 +25,7 @@ var activitySelected;
 var thmap;
 var brochueretti;
 var marker;
+var translator;
 
 function validateEmail(email) {
   var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -66,8 +68,39 @@ var app = {
 				$('#splashscreen').hide();
 		});
     },
+    cambiarIdioma: function() {
+		var lkey;
+		translator = new Language();
+		$('[data-textlang!=""]').each(function( index ) {
+			lkey = $(this).data('textlang');
+			if(lkey!=undefined) {
+				$(this).html(translator.getStr(lkey));
+			}
+		});
+    },
     onDeviceReady: function() {
 		user_platform = device.platform;
+		window.localStorage.setItem('launchCount', null);
+		var applaunchCount = 0;
+		if(window.localStorage.getItem('launchCount')!='' && window.localStorage.getItem('launchCount')!=0 && window.localStorage.getItem('launchCount')!=null) {
+			applaunchCount = window.localStorage.getItem('launchCount');
+			defLang = window.localStorage.getItem('lang');
+			app.cambiarIdioma();
+		} else{
+			if(navigator.globalization!=undefined) {
+				navigator.globalization.getPreferredLanguage(
+					function (language) {
+						defLang = language.value.substring(0, 2);
+						defLang = (defLang=='en' || defLang=='es' || defLang=='pt')?defLang:'en';
+						window.localStorage.setItem('lang', defLang);
+						alert(language.value);
+						app.cambiarIdioma();
+					},
+					function () {alert("nada")}
+				);
+			}
+		}
+		
 		$('.ncopy').html(ncopy);
 		if (sessionId!=null && sessionId!=undefined && sessionId!='null') {
 			loginUser = true;
@@ -99,12 +132,12 @@ var app = {
 							app.setupPush();
 							app.startApp();
 						} else {
-							$('#loginError').html('<div class="alert alert-danger" role="alert">Username or password incorrect.</div>');
+							$('#loginError').html('<div class="alert alert-danger" role="alert">'+translator.getStr('username_or_pass_inco')+'</div>');
 						}
 					},
 					error : function(xhr, ajaxOptions, thrownError) {
 						enviando = false;
-						$('#loginError').html('<div class="alert alert-danger" role="alert">Error. Try Again.</div>');
+						$('#loginError').html('<div class="alert alert-danger" role="alert">'+translator.getStr('error_try_again')+'</div>');
 					}
 					
 				});
@@ -205,39 +238,39 @@ var app = {
 					
 		$('#homescreen').addClass('menuopened');
 		if(section=='Alarms') {
-			$('#section_Alarms .itemsIntContent').html('Loading...');
+			$('#section_Alarms .itemsIntContent').html(translator.getStr('loading'));
 			app.getAlarms();
 		}
 		if(section=='Messages') {
-			$('#section_Messages .itemsIntContent').html('Loading...');
+			$('#section_Messages .itemsIntContent').html(translator.getStr('loading'));
 			app.getMessages();
 		}
 		if(section=='Events') {
-			$('#section_Events .itemsIntContent').html('Loading...');
+			$('#section_Events .itemsIntContent').html(translator.getStr('loading'));
 			app.getEvents();
 		}
 		if(section=='Activities') {
-			$('#section_Activities .itemsIntContent').html('Loading...');
+			$('#section_Activities .itemsIntContent').html(translator.getStr('loading'));
 			app.getActivities();
 		}
 		if(section=='Brochures') {
-			$('#section_Brochures .itemsIntContent').html('Loading...');
+			$('#section_Brochures .itemsIntContent').html(translator.getStr('loading'));
 			app.getBrochures();
 		}
 		if(section=='Promotions') {
-			$('#section_Promotions .itemsIntContent').html('Loading...');
+			$('#section_Promotions .itemsIntContent').html(translator.getStr('loading'));
 			app.getPromotions();
 		}
 		if(section=='News') {
-			$('#section_News .itemsIntContent').html('Loading...');
+			$('#section_News .itemsIntContent').html(translator.getStr('loading'));
 			app.getNews();
 		}
 		if(section=='Gallery') {
-			$('#section_Gallery .itemsIntContent').html('Loading...');
+			$('#section_Gallery .itemsIntContent').html(translator.getStr('loading'));
 			app.getGallery();
 		}
 		if(section=='Shop') {
-			$('#section_Shop .itemsIntContent').html('Loading...');
+			$('#section_Shop .itemsIntContent').html(translator.getStr('loading'));
 			app.getShop();
 		}
 		if(section=='Rating') {
@@ -249,31 +282,31 @@ var app = {
     },
     putContentSectionInt: function(section, itemID) {
 		if(section=='Alarm_int') {
-			$('#section_Alarm_int .itemsIntContent').html('Loading...');
+			$('#section_Alarm_int .itemsIntContent').html(translator.getStr('loading'));
 			app.getAlarm(itemID);
 		}
 		if(section=='Message_int') {
-			$('#section_Message_int .itemsIntContent').html('Loading...');
+			$('#section_Message_int .itemsIntContent').html(translator.getStr('loading'));
 			app.getMessage(itemID, 0);
 		}
 		if(section=='Event_int') {
-			$('#section_Event_int .itemsIntContent').html('Loading...');
+			$('#section_Event_int .itemsIntContent').html(translator.getStr('loading'));
 			app.getEvent(itemID);
 		}
 		if(section=='Activity_int') {
-			$('#section_Activity_int .itemsIntContent').html('Loading...');
+			$('#section_Activity_int .itemsIntContent').html(translator.getStr('loading'));
 			app.getActivity(itemID);
 		}
 		if(section=='Brochure_int') {
-			$('#section_Brochure_int .itemsIntContent').html('Loading...');
+			$('#section_Brochure_int .itemsIntContent').html(translator.getStr('loading'));
 			app.getBrochure(itemID);
 		}
 		if(section=='Promotion_int') {
-			$('#section_Promotion_int .itemsIntContent').html('Loading...');
+			$('#section_Promotion_int .itemsIntContent').html(translator.getStr('loading'));
 			app.getPromotion(itemID);
 		}
 		if(section=='New_int') {
-			$('#section_New_int .itemsIntContent').html('Loading...');
+			$('#section_New_int .itemsIntContent').html(translator.getStr('loading'));
 			app.getNew(itemID);
 		}
     },
@@ -310,14 +343,14 @@ var app = {
 							desdedonde.append(app.ponerGaleria());
 						}
 					} else {
-						desdedonde.html('<div class="alert alert-info"><b>There are no news.</b></div>');
+						desdedonde.html('<div class="alert alert-info"><b>'+translator.getStr('there_are_no_news')+'</b></div>');
 					}
 					
 					$('#homescreen').addClass('menuopened');
 				},
 				error : function(xhr, ajaxOptions, thrownError) {
 					enviando = false;
-					desdedonde.html('<div class="alert alert-danger"><b>Error. try later</b></div>');
+					desdedonde.html('<div class="alert alert-danger"><b>'+translator.getStr('error_try_again')+'</b></div>');
 				}
 			});
 		} 
@@ -403,7 +436,7 @@ var app = {
 											'			<h4 class="titHomeBlock">'+item.title+'</h4>'+
 											'			<div class="textHomeBlock">'+item.text+'</div>'+
 											'			<div class="textHomeBlock"><b>$ '+item.price+'</b></div>'+
-											'			<button class="btn btn-primary btn-xs btnShopThis app_back app_color" data-idprod="'+item.idprod+'">Buy</button>'+
+											'			<button class="btn btn-primary btn-xs btnShopThis app_back app_color" data-idprod="'+item.idprod+'">'+translator.getStr('buy')+'</button>'+
 											'		</div>'+
 											'	</div>'+
 											'';
@@ -411,14 +444,14 @@ var app = {
 							});
 						}
 					} else {
-						desdedonde.html('<div class="alert alert-info"><b>There are no tiems to buy.</b></div>');
+						desdedonde.html('<div class="alert alert-info"><b>'+translator.getStr('there_are_no_tiems_to_buy')+'</b></div>');
 					}
 					
 					$('#homescreen').addClass('menuopened');
 				},
 				error : function(xhr, ajaxOptions, thrownError) {
 					enviando = false;
-					desdedonde.html('<div class="alert alert-danger"><b>Error. try later</b></div>');
+					desdedonde.html('<div class="alert alert-danger"><b>'+translator.getStr('error_try_again')+'</b></div>');
 				}
 			});
 		} 
@@ -447,7 +480,7 @@ var app = {
 											'		<div class="contHomeBlock">'+
 											'			<h4 class="subtitHomeBlock">'+item.title+'</h4>'+
 											'			<div class="textHomeBlock">'+item.date.substring(0,10)+'</div>'+
-											'			<button class="btn btn-primary btn-xs btnViewMoreNews app_back app_color" data-newid="'+item.idnew+'">View more</button>'+
+											'			<button class="btn btn-primary btn-xs btnViewMoreNews app_back app_color" data-newid="'+item.idnew+'">'+translator.getStr('view_more')+'</button>'+
 											'		</div>'+
 											'	</div>'+
 											'';
@@ -455,14 +488,14 @@ var app = {
 							});
 						}
 					} else {
-						desdedonde.html('<div class="alert alert-info"><b>There are no news.</b></div>');
+						desdedonde.html('<div class="alert alert-info"><b>'+translator.getStr('there_are_no_news')+'</b></div>');
 					}
 					
 					$('#homescreen').addClass('menuopened');
 				},
 				error : function(xhr, ajaxOptions, thrownError) {
 					enviando = false;
-					desdedonde.html('<div class="alert alert-danger"><b>Error. try later</b></div>');
+					desdedonde.html('<div class="alert alert-danger"><b>'+translator.getStr('error_try_again')+'</b></div>');
 				}
 			});
 		} 
@@ -497,12 +530,12 @@ var app = {
 						$('#section_New_int .titleElement').html(item.title);
 						desdedonde.append(table);
 					} else {
-						desdedonde.html('<div class="alert alert-info"><b>News not found.</b></div>');
+						desdedonde.html('<div class="alert alert-info"><b>'+translator.getStr('news_not_found')+'</b></div>');
 					}
 				},
 				error : function(xhr, ajaxOptions, thrownError) {
 					enviando = false;
-					desdedonde.html('<div class="alert alert-danger"><b>Error. try later</b></div>');
+					desdedonde.html('<div class="alert alert-danger"><b>'+translator.getStr('error_try_again')+'</b></div>');
 				}
 			});
 		} 
@@ -530,7 +563,7 @@ var app = {
 											'		<div class="imgHomeBlock" style="background-image: url('+item.image+');"></div>'+
 											'		<div class="contHomeBlock">'+
 											'			<h4 class="subtitHomeBlock">'+item.title+'</h4>'+
-											'			<button class="btn btn-primary btn-xs btnViewMorePromo app_back app_color" data-promid="'+item.idpromo+'">View more</button>'+
+											'			<button class="btn btn-primary btn-xs btnViewMorePromo app_back app_color" data-promid="'+item.idpromo+'">'+translator.getStr('view_more')+'</button>'+
 											'		</div>'+
 											'	</div>'+
 											'';
@@ -538,14 +571,14 @@ var app = {
 							});
 						}
 					} else {
-						desdedonde.html('<div class="alert alert-info"><b>There are no activities.</b></div>');
+						desdedonde.html('<div class="alert alert-info"><b>'+translator.getStr('there_are_no_promotions')+'</b></div>');
 					}
 					
 					$('#homescreen').addClass('menuopened');
 				},
 				error : function(xhr, ajaxOptions, thrownError) {
 					enviando = false;
-					desdedonde.html('<div class="alert alert-danger"><b>Error. try later</b></div>');
+					desdedonde.html('<div class="alert alert-danger"><b>'+translator.getStr('error_try_again')+'</b></div>');
 				}
 			});
 		} 
@@ -579,12 +612,12 @@ var app = {
 						$('#section_Promotion_int .titleElement').html(item.title);
 						desdedonde.append(table);
 					} else {
-						desdedonde.html('<div class="alert alert-info"><b>Promotion not found.</b></div>');
+						desdedonde.html('<div class="alert alert-info"><b>'+translator.getStr('promotion_not_found')+'</b></div>');
 					}
 				},
 				error : function(xhr, ajaxOptions, thrownError) {
 					enviando = false;
-					desdedonde.html('<div class="alert alert-danger"><b>Error. try later</b></div>');
+					desdedonde.html('<div class="alert alert-danger"><b>'+translator.getStr('error_try_again')+'</b></div>');
 				}
 			});
 		} 
@@ -608,13 +641,13 @@ var app = {
 						desdedonde.html('');
 						if(data.data.length>0) {
 							$.each(data.data, function(idx, item) {
-								var reservation = (item.reservation=="1")?'Requiere reservation':'';
+								var reservation = (item.reservation=="1")?translator.getStr('requiere_reservation'):'';
 								var itemnew = '<div class="itemHomeBlock">'+
 											'		<div class="imgHomeBlock" style="background-image: url('+item.image+');"></div>'+
 											'		<div class="contHomeBlock">'+
 											'			<h4 class="subtitHomeBlock">'+item.title+'</h4>'+
 											'			<div class="textHomeBlock">'+reservation+'</div>'+
-											'			<button class="btn btn-primary btn-xs btnViewMoreActivity app_back app_color" data-actid="'+item.idact+'">View more</button>'+
+											'			<button class="btn btn-primary btn-xs btnViewMoreActivity app_back app_color" data-actid="'+item.idact+'">'+translator.getStr('view_more')+'</button>'+
 											'		</div>'+
 											'	</div>'+
 											'';
@@ -622,14 +655,14 @@ var app = {
 							});
 						}
 					} else {
-						desdedonde.html('<div class="alert alert-info"><b>There are no activities.</b></div>');
+						desdedonde.html('<div class="alert alert-info"><b>'+translator.getStr('there_are_no_activities')+'</b></div>');
 					}
 					
 					$('#homescreen').addClass('menuopened');
 				},
 				error : function(xhr, ajaxOptions, thrownError) {
 					enviando = false;
-					desdedonde.html('<div class="alert alert-danger"><b>Error. try later</b></div>');
+					desdedonde.html('<div class="alert alert-danger"><b>'+translator.getStr('error_try_again')+'</b></div>');
 				}
 			});
 		} 
@@ -655,11 +688,11 @@ var app = {
 						desdedonde.html('');
 						var item = data.data;
 						activitySelected = item;
-						var reservation = (item.reservation=="1")?'Requiere reservation':'';
+						var reservation = (item.reservation=="1")?translator.getStr('requiere_reservation'):'';
 						var imgeve = (item.image!="")?'	<div class="event_pic"><img src="'+item.image+'" class="event_img"></div>':'';
-						var link = (item.link!="")?'	<a href="'+item.link+'" class="linkinfo app_color_inv" target="_blank">View link</a>':'';
+						var link = (item.link!="")?'	<a href="'+item.link+'" class="linkinfo app_color_inv" target="_blank">'+translator.getStr('view_link')+'</a>':'';
 						var actdate = (item.date!=' ')?item.date:item.date_a;
-						var added = (item.added=="1")?'	<div class="actionbock"><div class="btn btn-primary app_back app_color" >Added to calendar ('+actdate+')</div></div>':'	<div class="actionbock"><button class="btn btn-primary btnAddAct app_back app_color" data-actid="'+item.idact+'">Add to calendar</button></div>';
+						var added = (item.added=="1")?'	<div class="actionbock"><div class="btn btn-primary app_back app_color" >'+translator.getStr('added_to_calendar')+' ('+actdate+')</div></div>':'	<div class="actionbock"><button class="btn btn-primary btnAddAct app_back app_color" data-actid="'+item.idact+'">'+translator.getStr('add_to_calendar')+'</button></div>';
 						var table='<div class="event_cont">'+
 						'	<div class="event_title">'+item.title+'</div>'+
 						'	<div class="event_date">'+reservation+'</div>'+
@@ -671,12 +704,12 @@ var app = {
 						$('#section_Activity_int .titleElement').html(item.title);
 						desdedonde.append(table);
 					} else {
-						desdedonde.html('<div class="alert alert-info"><b>Event not found.</b></div>');
+						desdedonde.html('<div class="alert alert-info"><b>'+translator.getStr('event_not_found')+'</b></div>');
 					}
 				},
 				error : function(xhr, ajaxOptions, thrownError) {
 					enviando = false;
-					desdedonde.html('<div class="alert alert-danger"><b>Error. try later</b></div>');
+					desdedonde.html('<div class="alert alert-danger"><b>'+translator.getStr('error_try_again')+'</b></div>');
 				}
 			});
 		} 
@@ -705,7 +738,7 @@ var app = {
 											'		<div class="contHomeBlock">'+
 											'			<h4 class="subtitHomeBlock">'+item.title+'</h4>'+
 											'			<div class="textHomeBlock">'+item.date.substring(0,10)+'</div>'+
-											'			<button class="btn btn-primary btn-xs btnViewMoreEvent app_back app_color" data-eveid="'+item.idevent+'">View more</button>'+
+											'			<button class="btn btn-primary btn-xs btnViewMoreEvent app_back app_color" data-eveid="'+item.idevent+'">'+translator.getStr('view_more')+'</button>'+
 											'		</div>'+
 											'	</div>'+
 											'';
@@ -713,14 +746,14 @@ var app = {
 							});
 						}
 					} else {
-						desdedonde.html('<div class="alert alert-info"><b>There are no events.</b></div>');
+						desdedonde.html('<div class="alert alert-info"><b>'+translator.getStr('there_are_no_events')+'</b></div>');
 					}
 					
 					$('#homescreen').addClass('menuopened');
 				},
 				error : function(xhr, ajaxOptions, thrownError) {
 					enviando = false;
-					desdedonde.html('<div class="alert alert-danger"><b>Error. try later</b></div>');
+					desdedonde.html('<div class="alert alert-danger"><b>'+translator.getStr('error_try_again')+'</b></div>');
 				}
 			});
 		} 
@@ -747,7 +780,7 @@ var app = {
 						var item = data.data;
 						eventSelected = data.data;
 						var imgeve = (item.image!="")?'	<div class="event_pic"><img src="'+item.image+'" class="event_img"></div>':'';
-						var added = (item.added=="1")?'	<div class="actionbock"><div class="btn btn-primary app_back app_color" >Added to calendar</div></div>':'	<div class="actionbock"><button class="btn btn-primary btnAddEvent app_back app_color" data-eveid="'+item.idevent+'">Add to calendar</button></div>';
+						var added = (item.added=="1")?'	<div class="actionbock"><div class="btn btn-primary app_back app_color" >'+translator.getStr('added_to_calendar')+'</div></div>':'	<div class="actionbock"><button class="btn btn-primary btnAddEvent app_back app_color" data-eveid="'+item.idevent+'">'+translator.getStr('add_to_calendar')+'</button></div>';
 						var table='<div class="event_cont">'+
 						'	<div class="event_title">'+item.title+'</div>'+
 						'	<div class="event_date">'+item.date+'</div>'+
@@ -758,12 +791,12 @@ var app = {
 						$('#section_Event_int .titleElement').html(item.title);
 						desdedonde.append(table);
 					} else {
-						desdedonde.html('<div class="alert alert-info"><b>Event not found.</b></div>');
+						desdedonde.html('<div class="alert alert-info"><b>'+translator.getStr('event_not_found')+'</b></div>');
 					}
 				},
 				error : function(xhr, ajaxOptions, thrownError) {
 					enviando = false;
-					desdedonde.html('<div class="alert alert-danger"><b>Error. try later</b></div>');
+					desdedonde.html('<div class="alert alert-danger"><b>'+translator.getStr('error_try_again')+'</b></div>');
 				}
 			});
 		} 
@@ -791,28 +824,28 @@ var app = {
 								var labelPrio = (item.priority_i==2)?'danger':((item.priority_i==1)?'warning':'info');
 								var labelState = (item.state_i==2)?'success':((item.state_i==1)?'warning':'info');
 								table+= '<tr>'+
-								'	<td><b>Date:</b> '+item.date+'</td>'+
-								'	<td><b>Created at:</b> '+item.created_at+'</td>'+
+								'	<td><b>'+translator.getStr('date')+':</b> '+item.date+'</td>'+
+								'	<td><b>'+translator.getStr('created_at')+':</b> '+item.created_at+'</td>'+
 								'</tr><tr>'+
-								'	<td><b>Priority: </b> <span class="label label-'+labelPrio+'">'+item.priority+'</span></td>'+
-								'	<td><b>Type: </b> '+item.type+'</td>'+
+								'	<td><b>'+translator.getStr('priority')+': </b> <span class="label label-'+labelPrio+'">'+item.priority+'</span></td>'+
+								'	<td><b>'+translator.getStr('type')+': </b> '+item.type+'</td>'+
 								'</tr><tr>'+
 								'	<td><b>State: </b> <span class="label label-'+labelState+'">'+item.state+'</span></td>'+
-								'	<td><button data-alarm="'+item.alid+'" class="btn btn-primary btn-xs btnViewAlarm app_back app_color"><i class="fa fa-eye"></i> View details</button></td>'+
+								'	<td><button data-alarm="'+item.alid+'" class="btn btn-primary btn-xs btnViewAlarm app_back app_color"><i class="fa fa-eye"></i> '+translator.getStr('view_details')+'</button></td>'+
 								'</tr>';
 								table+='</table>';
 								desdedonde.append(table);
 							});
 						}
 					} else {
-						desdedonde.html('<div class="alert alert-info"><b>You have no alarms saved.</b></div>');
+						desdedonde.html('<div class="alert alert-info"><b>'+translator.getStr('you_have_no_alarms_saved')+'</b></div>');
 					}
 					
 					$('#homescreen').addClass('menuopened');
 				},
 				error : function(xhr, ajaxOptions, thrownError) {
 					enviando = false;
-					desdedonde.html('<div class="alert alert-danger"><b>Error. try later</b></div>');
+					desdedonde.html('<div class="alert alert-danger"><b>'+translator.getStr('error_try_again')+'</b></div>');
 				}
 			});
 		} 
@@ -840,36 +873,36 @@ var app = {
 						var labelPrio = (item.priority_i==2)?'danger':((item.priority_i==1)?'warning':'info');
 						var labelState = (item.state_i==2)?'success':((item.state_i==1)?'warning':'info');
 						table+= '<tr>'+
-						'	<td><b>Date:</b> '+item.date+'</td>'+
+						'	<td><b>'+translator.getStr('date')+':</b> '+item.date+'</td>'+
 						'</tr><tr>'+
-						'	<td><b>Created at:</b> '+item.created_at+'</td>'+
+						'	<td><b>'+translator.getStr('created_at')+':</b> '+item.created_at+'</td>'+
 						'</tr><tr>'+
-						'	<td><b>Priority: </b> <span class="label label-'+labelPrio+'">'+item.priority+'</span></td>'+
+						'	<td><b>'+translator.getStr('priority')+': </b> <span class="label label-'+labelPrio+'">'+item.priority+'</span></td>'+
 						'</tr><tr>'+
-						'	<td><b>Type: </b> '+item.type+'</td>'+
+						'	<td><b>'+translator.getStr('type')+': </b> '+item.type+'</td>'+
 						'</tr><tr>'+
-						'	<td><b>State: </b> <span class="label label-'+labelState+'">'+item.state+'</span></td>'+
+						'	<td><b>'+translator.getStr('state')+': </b> <span class="label label-'+labelState+'">'+item.state+'</span></td>'+
 						'</tr><tr>'+
 						'	<td>'+item.notes+'</td>'+
 						'</tr><tr>'+
-						'	<td><b>Notify by Room phone:</b> '+((item.notify_phone)?'Yes':'No')+'</td>'+
+						'	<td><b>'+translator.getStr('notify_phone')+':</b> '+((item.notify_phone)?'Yes':'No')+'</td>'+
 						'</tr><tr>'+
-						'	<td><b>Notify by CellPhone: </b> '+((item.notify_cell)?'Yes':'No')+'</td>'+
+						'	<td><b>'+translator.getStr('notify_cellphone')+':</b> '+((item.notify_cell)?'Yes':'No')+'</td>'+
 						'</tr><tr>'+
-						'	<td><b>Notify by Email:</b> '+((item.notify_email)?'Yes':'No')+'</td>'+
+						'	<td><b>'+translator.getStr('notify_email')+':</b> '+((item.notify_email)?'Yes':'No')+'</td>'+
 						'</tr><tr>'+
-						'	<td><b>Notify by Push notification: </b> '+((item.notify_push)?'Yes':'No')+'</td>'+
+						'	<td><b>'+translator.getStr('notify_push')+':</b> '+((item.notify_push)?'Yes':'No')+'</td>'+
 						'</tr>';
 						table+='</table>';
 						$('#section_Alarm_int .titleElement').html(''+item.type);
 						desdedonde.append(table);
 					} else {
-						desdedonde.html('<div class="alert alert-info"><b>Alarm not found.</b></div>');
+						desdedonde.html('<div class="alert alert-info"><b>'+translator.getStr('alarm_not_found')+'</b></div>');
 					}
 				},
 				error : function(xhr, ajaxOptions, thrownError) {
 					enviando = false;
-					desdedonde.html('<div class="alert alert-danger"><b>Error. try later</b></div>');
+					desdedonde.html('<div class="alert alert-danger"><b>'+translator.getStr('error_try_again')+'</b></div>');
 				}
 			});
 		} 
@@ -906,7 +939,7 @@ var app = {
 											'					<div class="right">'+
 											'						<h3>'+msgitem.from+'<small>'+msgitem.date+'</small></h3>'+
 											'						<p>'+msgitem.subject+'</p>'+
-											'						<p><button data-alarm="'+msgitem.msgid+'" class="btn btn-primary btn-xs app_back app_color"><i class="fa fa-eye"></i> Read message</button></p>'+
+											'						<p><button data-alarm="'+msgitem.msgid+'" class="btn btn-primary btn-xs app_back app_color"><i class="fa fa-eye"></i> '+translator.getStr('read_message')+'</button></p>'+
 											'					</div>'+
 											'				</div>'+
 											'			</a>';
@@ -915,14 +948,14 @@ var app = {
 							$('#homescreen').addClass('menuopened');
 						}
 					} else {
-						desdedonde.html('<div class="alert alert-info"><b>You have no messages.</b></div>');
+						desdedonde.html('<div class="alert alert-info"><b>'+translator.getStr('you_have_no_messages')+'</b></div>');
 					}
 					
 					$('#homescreen').addClass('menuopened');
 				},
 				error : function(xhr, ajaxOptions, thrownError) {
 					enviando = false;
-					desdedonde.html('<div class="alert alert-danger"><b>Error. try later</b></div>');
+					desdedonde.html('<div class="alert alert-danger"><b>'+translator.getStr('error_try_again')+'</b></div>');
 				}
 			});
 		} 
@@ -951,12 +984,12 @@ var app = {
 						}
 						app.putMessage(data.data);
 					} else {
-						desdedonde.html('<div class="alert alert-info"><b>Message not found.</b></div>');
+						desdedonde.html('<div class="alert alert-info"><b>'+translator.getStr('message_not_found')+'</b></div>');
 					}
 				},
 				error : function(xhr, ajaxOptions, thrownError) {
 					enviando = false;
-					desdedonde.html('<div class="alert alert-danger"><b>Error. try later</b></div>');
+					desdedonde.html('<div class="alert alert-danger"><b>'+translator.getStr('error_try_again')+'</b></div>');
 				}
 				
 			});
@@ -968,6 +1001,12 @@ var app = {
 		if(messagge.type==1) {
 			$('#msgid_'+messagge.msgid+' i.fa-circle').remove();
 		}
+		var cantunread = $('.btnViewMessage i.fa-circle').size();
+		var bubmsg = '';
+		if(cantunread>0) {
+			bubmsg = '<span class="badge bg-red">'+cantunread+'</span>';
+		}
+		$('#messageslinkhome').append(bubmsg);
 		var msgscont = '		<div class="mail_Content">'+
 						'			<div class="mail_heading row">'+
 						'				<div class="col-md-4 text-right">'+
@@ -992,16 +1031,16 @@ var app = {
 						'		</div>'+
 						'		<div class="reply_sec">'+
 						'			<form id="formmessageRepl">'+
-						'				<h4 class="reply_tit app_back app_color">Reply</h4>'+
+						'				<h4 class="reply_tit app_back app_color">'+translator.getStr('reply')+'</h4>'+
 						'				<div class="form-group">'+
-						'					<label for="newmessagerepl">Your Message</label>'+
+						'					<label for="newmessagerepl">'+translator.getStr('your_message')+'</label>'+
 						'					<textarea class="form-control" id="newmessagerepl" name="newmessagerepl" ></textarea>'+
 						'				</div>'+
 						'				<div class="form-group" id="resmesmrepl">'+
 						'				</div>'+
 						'				<div class="form-group">'+
 						'					<input type="hidden" name="replymsgid" id="replymsgid" value="'+messagge.msgid+'">'+
-						'					<button type="button" class="btn btn-primary app_back app_color btnSendMessageRepl">Send</button>'+
+						'					<button type="button" class="btn btn-primary app_back app_color btnSendMessageRepl">'+translator.getStr('send')+'</button>'+
 						'				</div>'+
 						'			</form>'+
 						'		</div>'+
@@ -1014,7 +1053,7 @@ var app = {
 		var errorMsg = '';
 		if($('#datealarm').val()=='') {
 			error = true;
-			errorMsg += ' Select a valid date.';
+			errorMsg += ' '+translator.getStr('select_a_valid_date');
 		}
 		
 		if(!error && !enviando) {
@@ -1040,12 +1079,12 @@ var app = {
 					enviando = false;
 					if(data.res) {
 						$('#newalarm')[0].reset();
-						$('#resmes').html('<div class="alert alert-success"><b>Your alarm was saved successfully.</b></div>');
+						$('#resmes').html('<div class="alert alert-success"><b>'+translator.getStr('your_alarm_was_saved_successfully')+'</b></div>');
 						setTimeout(function() {
 							$('#resmes').html('');
 						}, 2000);
 					} else {
-						$('#resmes').html('<div class="alert alert-danger"><b>Error. try later</b></div>');
+						$('#resmes').html('<div class="alert alert-danger"><b>'+translator.getStr('error_try_again')+'</b></div>');
 						setTimeout(function() {
 							$('#resmes').html('');
 						}, 2000);
@@ -1053,7 +1092,7 @@ var app = {
 				},
 				error : function(xhr, ajaxOptions, thrownError) {
 					enviando = false;
-					$('#resmes').html('<div class="alert alert-danger"><b>Error. try later</b></div>');
+					$('#resmes').html('<div class="alert alert-danger"><b>'+translator.getStr('error_try_again')+'</b></div>');
 					setTimeout(function() {
 						$('#resmes').html('');
 					}, 2000);
@@ -1085,7 +1124,7 @@ var app = {
 				url: apiURL,
 				success: function (data) {
 					if(data.res) {
-						$('#resmeseve2').html('<div class="alert alert-success"><b>Thanks for rate us!.</b></div>');
+						$('#resmeseve2').html('<div class="alert alert-success"><b>'+translator.getStr('thanks_for_rate_us')+'</b></div>');
 						
 						$('#rate_type_'+type+' .rate_stars').html('');
 						for(var i=1;i<=5;i++) {
@@ -1099,7 +1138,7 @@ var app = {
 						}, 2000);
 					} else {
 						enviando = false;
-						$('#resmeseve2').html('<div class="alert alert-danger"><b>Error try later.</b></div>');
+						$('#resmeseve2').html('<div class="alert alert-danger"><b>'+translator.getStr('error_try_again')+'</b></div>');
 						setTimeout(function() {
 							$('#resmeseve2').html('');
 						}, 2000);
@@ -1107,7 +1146,7 @@ var app = {
 				},
 				error : function(xhr, ajaxOptions, thrownError) {
 					enviando = false;
-					$('#resmeseve2').html('<div class="alert alert-danger"><b>Error try later.</b></div>');
+					$('#resmeseve2').html('<div class="alert alert-danger"><b>'+translator.getStr('error_try_again')+'</b></div>');
 					setTimeout(function() {
 						$('#resmeseve2').html('');
 					}, 2000);
@@ -1121,11 +1160,11 @@ var app = {
 		var errorMsg = '';
 		if($('#newmessage').val()=='') {
 			error = true;
-			errorMsg += 'Write a message.';
+			errorMsg += translator.getStr('write_a_message');
 		}
 		if($('#messagesubject').val()=='') {
 			error = true;
-			errorMsg += 'Write a subject.';
+			errorMsg += translator.getStr('write_a_subject');
 		}
 		
 		if(!error) {
@@ -1145,12 +1184,12 @@ var app = {
 					enviando = false;
 					if(data.res) {
 						$('#formmessage')[0].reset();
-						$('#resmesm').html('<div class="alert alert-success"><b>Your Message was sended.</b></div>');
+						$('#resmesm').html('<div class="alert alert-success"><b>'+translator.getStr('your_message_was_sended')+'</b></div>');
 						setTimeout(function() {
 							$('#resmesm').html('');
 						}, 2000);
 					} else {
-						$('#resmesm').html('<div class="alert alert-danger"><b>Error. try later</b></div>');
+						$('#resmesm').html('<div class="alert alert-danger"><b>'+translator.getStr('error_try_again')+'</b></div>');
 						setTimeout(function() {
 							$('#resmesm').html('');
 						}, 2000);
@@ -1158,7 +1197,7 @@ var app = {
 				},
 				error : function(xhr, ajaxOptions, thrownError) {
 					enviando = false;
-					$('#resmes').html('<div class="alert alert-danger"><b>Error. try later</b></div>');
+					$('#resmes').html('<div class="alert alert-danger"><b>'+translator.getStr('error_try_again')+'</b></div>');
 					setTimeout(function() {
 						$('#resmes').html('');
 					}, 2000);
@@ -1176,7 +1215,7 @@ var app = {
 		var errorMsg = '';
 		if($('#newmessagerepl').val()=='') {
 			error = true;
-			errorMsg += 'Write a message.';
+			errorMsg += translator.getStr('write_a_message');
 		}
 		
 		if(!error) {
@@ -1196,12 +1235,12 @@ var app = {
 					enviando = false;
 					if(data.res) {
 						$('#formmessageRepl')[0].reset();
-						$('#resmesmrepl').html('<div class="alert alert-success"><b>Your Message was sended.</b></div>');
+						$('#resmesmrepl').html('<div class="alert alert-success"><b>'+translator.getStr('your_message_was_sended')+'</b></div>');
 						setTimeout(function() {
 							$('#resmesmrepl').html('');
 						}, 2000);
 					} else {
-						$('#resmesmrepl').html('<div class="alert alert-danger"><b>Error. try later</b></div>');
+						$('#resmesmrepl').html('<div class="alert alert-danger"><b>'+translator.getStr('error_try_again')+'</b></div>');
 						setTimeout(function() {
 							$('#resmesmrepl').html('');
 						}, 2000);
@@ -1209,7 +1248,7 @@ var app = {
 				},
 				error : function(xhr, ajaxOptions, thrownError) {
 					enviando = false;
-					$('#resmesmrepl').html('<div class="alert alert-danger"><b>Error. try later</b></div>');
+					$('#resmesmrepl').html('<div class="alert alert-danger"><b>'+translator.getStr('error_try_again')+'</b></div>');
 					setTimeout(function() {
 						$('#resmesmrepl').html('');
 					}, 2000);
@@ -1246,14 +1285,14 @@ var app = {
 							});
 						}
 					} else {
-						desdedonde.html('<div class="alert alert-info"><b>There is no Brochures to download.</b></div>');
+						desdedonde.html('<div class="alert alert-info"><b>'+translator.getStr('no_brochures_to_download')+'</b></div>');
 					}
 					
 					$('#homescreen').addClass('menuopened');
 				},
 				error : function(xhr, ajaxOptions, thrownError) {
 					enviando = false;
-					desdedonde.html('<div class="alert alert-danger"><b>Error. try later</b></div>');
+					desdedonde.html('<div class="alert alert-danger"><b>'+translator.getStr('error_try_again')+'</b></div>');
 				}
 			});
 		} 
@@ -1352,10 +1391,10 @@ var app = {
 			dayClick: function (date, jsEvent, view) {
 				var htmlbody = '<div class="row">'+
 				'	<div class="col-md-12">'+
-				'		<input class="form-control" type="text" id="eventguest_title" placeholder="Title *">'+
+				'		<input class="form-control" type="text" id="eventguest_title" placeholder="'+translator.getStr('title')+' *">'+
 				'	</div>'+
 				'	<div class="col-md-12">'+
-				'		<input class="form-control" type="text" id="eventguest_text" placeholder="Notes">'+
+				'		<input class="form-control" type="text" id="eventguest_text" placeholder="'+translator.getStr('notes')+'">'+
 				'	</div>'+
 				'	<div class="col-md-12">'+
 				'		<input class="form-control" type="text" id="eventguest_date" disabled value="'+date.format()+'">'+
@@ -1370,7 +1409,7 @@ var app = {
 				'		</div>'+
 				'	</div>'+
 				'</div>';
-				app.alerta(htmlbody, 'Add new event to calendar', '<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button><button type="button" class="btn btn-primary app_back app_color btnSaveEventCal">Save</button>');
+				app.alerta(htmlbody, translator.getStr('add_new_event_to_calendar'), '<button type="button" class="btn btn-default" data-dismiss="modal">'+translator.getStr('cancel')+'</button><button type="button" class="btn btn-primary app_back app_color btnSaveEventCal">'+translator.getStr('save')+'</button>');
 				for(var i=0;i<=23;i++) {
 					$('#hourselect').append('<option value="'+app.pad_with_zeroes(i,2)+'">'+app.pad_with_zeroes(i,2)+'</option>');
 				}
@@ -1387,7 +1426,7 @@ var app = {
 							'		<div class="contHomeBlock">'+
 							'			<h4 class="subtitHomeBlock">'+item.title+'</h4>'+
 							'			<div class="textHomeBlock">'+item.date.substring(0,10)+'</div>'+
-							'			<button class="btn btn-primary btn-xs btnViewMoreEveHome app_back app_color" data-eveid="'+item.idevent+'">View more</button>'+
+							'			<button class="btn btn-primary btn-xs btnViewMoreEveHome app_back app_color" data-eveid="'+item.idevent+'">'+translator.getStr('view_more')+'</button>'+
 							'		</div>'+
 							'	</div>'+
 							'';
@@ -1405,7 +1444,7 @@ var app = {
 							'		<div class="contHomeBlock">'+
 							'			<h4 class="subtitHomeBlock">'+item.title+'</h4>'+
 							'			<div class="textHomeBlock">'+item.date.substring(0,10)+'</div>'+
-							'			<button class="btn btn-primary btn-xs btnViewMoreNewsHome app_back app_color" data-newid="'+item.newsid+'">View more</button>'+
+							'			<button class="btn btn-primary btn-xs btnViewMoreNewsHome app_back app_color" data-newid="'+item.newsid+'">'+translator.getStr('view_more')+'</button>'+
 							'		</div>'+
 							'	</div>'+
 							'';
@@ -1476,7 +1515,7 @@ var app = {
 		}
     },
     alerta: function(cuerpo,title='Alerta',buttonsfooter=''){
-		var acciones = '<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>';
+		var acciones = '<button type="button" class="btn btn-default" data-dismiss="modal">'+translator.getStr('close')+'</button>';
 		if(buttonsfooter!='') {
 			acciones = buttonsfooter;
 		}
@@ -1498,7 +1537,7 @@ var app = {
 		'	<div class="col-md-12">'+itemPV.date+'</div>'+
 		'	<div class="col-md-12">'+itemPV.text+'</div>'+
 		'</div>';
-		app.alerta(htmlbody, itemPV.title, '<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>');
+		app.alerta(htmlbody, itemPV.title, '<button type="button" class="btn btn-default" data-dismiss="modal">'+translator.getStr('close')+'</button>');
     },
     addGuestEvent: function(data){
 		if (data.title) {
@@ -1506,7 +1545,7 @@ var app = {
 			var errorMsg = '';
 			if(data.date=='') {
 				error = true;
-				errorMsg += ' Select a valid date.';
+				errorMsg += ' '+translator.getStr('select_a_valid_date');
 			}
 			
 			if(!error && !enviando) {
@@ -1540,7 +1579,7 @@ var app = {
 							);
 							user_hotel.userprivateevents.push(data);
 						} else {
-							$('#resmeseve').html('<div class="alert alert-danger"><b>Event not created. Try later</b></div>');
+							$('#resmeseve').html('<div class="alert alert-danger"><b>'+translator.getStr('event_no_created')+'</b></div>');
 							setTimeout(function() {
 								$('#resmeseve').html('');
 							}, 2000);
@@ -1548,7 +1587,7 @@ var app = {
 					},
 					error : function(xhr, ajaxOptions, thrownError) {
 						enviando = false;
-						$('#resmeseve').html('<div class="alert alert-danger"><b>Error. Try later</b></div>');
+						$('#resmeseve').html('<div class="alert alert-danger"><b>'+translator.getStr('error_try_again')+'</b></div>');
 						setTimeout(function() {
 							$('#resmeseve').html('');
 						}, 2000);
@@ -1595,15 +1634,15 @@ var app = {
 								true // make the event "stick"
 							);
 							user_hotel.userprivateevents.push(data);
-							$('#section_Event_int .actionbock').html('<div class="btn btn-primary app_back app_color" >Added to calendar</div>');
-							app.alerta('<div class="alert alert-success"><b>The event was added to your calendar.</b></div>', 'Event Added', '<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>');
+							$('#section_Event_int .actionbock').html('<div class="btn btn-primary app_back app_color" >'+translator.getStr('added_to_calendar')+'</div>');
+							app.alerta('<div class="alert alert-success"><b>'+translator.getStr('event_added_to_calendar')+'</b></div>', translator.getStr('event_added'), '<button type="button" class="btn btn-default" data-dismiss="modal">'+translator.getStr('close')+'</button>');
 						} else {
-							app.alerta('<div class="alert alert-danger"><b>Event not created. Try later.</b></div>', 'Error', '<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>');
+							app.alerta('<div class="alert alert-danger"><b>'+translator.getStr('event_no_created')+'</b></div>', translator.getStr('error'), '<button type="button" class="btn btn-default" data-dismiss="modal">'+translator.getStr('close')+'</button>');
 						}
 					},
 					error : function(xhr, ajaxOptions, thrownError) {
 						enviando = false;
-						app.alerta('<div class="alert alert-danger"><b>Error. Try later.</b></div>', 'Error', '<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>');
+						app.alerta('<div class="alert alert-danger"><b>'+translator.getStr('error_try_again')+'.</b></div>', translator.getStr('error'), '<button type="button" class="btn btn-default" data-dismiss="modal">'+translator.getStr('close')+'</button>');
 					}
 				});
 			}
@@ -1616,7 +1655,7 @@ var app = {
 			var errorMsg = '';
 			if(!isValidDate($("#activity_sel_date").val())) {
 				error = true;
-				errorMsg = 'Pick a valid date';
+				errorMsg = ' '+translator.getStr('select_a_valid_date');
 			}
 			if(!error && !enviando) {
 				enviando = true;
@@ -1646,16 +1685,16 @@ var app = {
 								true // make the event "stick"
 							);
 							user_hotel.userprivateevents.push(data);
-							$('#section_Activity_int .actionbock').html('<div class="btn btn-primary app_back app_color" >Added to calendar</div>');
-							var confirmation = (activitySelected.reservation=="1")?' This activity requires a reservation, we contact you when the reservation is effective.':'';
-							app.alerta('<div class="alert alert-success"><b>The activity was added to your calendar.'+confirmation+'</b></div>', 'Activity Added', '<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>');
+							$('#section_Activity_int .actionbock').html('<div class="btn btn-primary app_back app_color" >'+translator.getStr('added_to_calendar')+'</div>');
+							var confirmation = (activitySelected.reservation=="1")?' '+translator.getStr('activity_require_reservation')+'':'';
+							app.alerta('<div class="alert alert-success"><b>'+translator.getStr('activity_added_to_calendar')+''+confirmation+'</b></div>', 'Activity Added', '<button type="button" class="btn btn-default" data-dismiss="modal">'+translator.getStr('close')+'</button>');
 						} else {
-							app.alerta('<div class="alert alert-danger"><b>Activity not created. Try later.</b></div>', 'Error', '<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>');
+							app.alerta('<div class="alert alert-danger"><b>'+translator.getStr('activity_no_created')+'</b></div>', translator.getStr('error'), '<button type="button" class="btn btn-default" data-dismiss="modal">'+translator.getStr('close')+'</button>');
 						}
 					},
 					error : function(xhr, ajaxOptions, thrownError) {
 						enviando = false;
-						app.alerta('<div class="alert alert-danger"><b>Error. Try later.</b></div>', 'Error', '<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>');
+						app.alerta('<div class="alert alert-danger"><b>'+translator.getStr('error_try_again')+'.</b></div>', translator.getStr('error'), '<button type="button" class="btn btn-default" data-dismiss="modal">'+translator.getStr('close')+'</button>');
 					}
 				});
 			} else {
@@ -1687,7 +1726,7 @@ var app = {
 					url: apiURL,
 					success: function (dataRes) {
 						if(dataRes.res) {
-							$('#resmeseve').html('<div class="alert alert-success"><b>Purchase registered.</b></div>');
+							$('#resmeseve').html('<div class="alert alert-success"><b>'+translator.getStr('purchase_registered')+'</b></div>');
 							$('#shop_text').val('');
 							$('#prodcid').val('');
 							setTimeout(function() {
@@ -1697,7 +1736,7 @@ var app = {
 							}, 4000);
 						} else {
 							enviando = false;
-							$('#resmeseve').html('<div class="alert alert-danger"><b>Purchase not registered. Try later.</b></div>');
+							$('#resmeseve').html('<div class="alert alert-danger"><b>'+translator.getStr('purchase_no_created')+'</b></div>');
 							setTimeout(function() {
 								$('#resmeseve').html('');
 							}, 2000);
@@ -1705,7 +1744,7 @@ var app = {
 					},
 					error : function(xhr, ajaxOptions, thrownError) {
 						enviando = false;
-						$('#resmeseve').html('<div class="alert alert-danger"><b>Error. Try later.</b></div>');
+						$('#resmeseve').html('<div class="alert alert-danger"><b>'+translator.getStr('error_try_again')+'.</b></div>');
 						setTimeout(function() {
 							$('#resmeseve').html('');
 						}, 2000);
@@ -1862,7 +1901,7 @@ var app = {
 					};
 					app.addGuestEvent(data);
 				} else {
-					$('#resmeseve').html('<div class="alert alert-danger"><b>Title and time is required.</b></div>');
+					$('#resmeseve').html('<div class="alert alert-danger"><b>'+translator.getStr('title_time_required')+'</b></div>');
 					setTimeout(function() {
 						$('#resmeseve').html('');
 					}, 2000);
@@ -1909,7 +1948,7 @@ var app = {
 				'	<div class="col-md-12">'+
 				'		'+itemnew+
 				'	</div>'+
-				'	<div class="col-md-12" style="margin: 25px 0;"><b>Choose prefered date & time.</b></div>'+
+				'	<div class="col-md-12" style="margin: 25px 0;"><b>'+translator.getStr('chose_prefered_date_time')+'</b></div>'+
 				'	<div class="col-md-12">'+
 				'		<input type="text" class="form-control" id="activity_sel_date">'+
 				'	</div>'+
@@ -1918,7 +1957,7 @@ var app = {
 				'		</div>'+
 				'	</div>'+
 				'</div>';
-				app.alerta(htmlbody, 'Add '+activitySelected.title+' to calendar', '<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button><button type="button" class="btn btn-primary app_back app_color btnAddActComp" data-actid="'+activitySelected.idact+'">Add to calendar</button>');
+				app.alerta(htmlbody, ''+translator.getStr('add')+' '+activitySelected.title+' '+translator.getStr('to_Calendar')+'', '<button type="button" class="btn btn-default" data-dismiss="modal">'+translator.getStr('cancel')+'</button><button type="button" class="btn btn-primary app_back app_color btnAddActComp" data-actid="'+activitySelected.idact+'">'+translator.getStr('add_to_calendar')+'</button>');
 				
 				$("#activity_sel_date").datetimepicker({
 					format: 'yyyy-mm-dd hh:ii',
@@ -1957,14 +1996,14 @@ var app = {
 					'		'+itemnew+
 					'	</div>'+
 					'	<div class="col-md-12">'+
-					'		<textarea class="form-control" type="text" id="shop_text" placeholder="Notes"></textarea><input type="hidden" id="prodcid" value="'+itemP.idprod+'">'+
+					'		<textarea class="form-control" type="text" id="shop_text" placeholder="'+translator.getStr('notes')+'"></textarea><input type="hidden" id="prodcid" value="'+itemP.idprod+'">'+
 					'	</div>'+
 					'	<div class="col-md-12">'+
 					'		<div class="form-group" id="resmeseve">'+
 					'		</div>'+
 					'	</div>'+
 					'</div>';
-					app.alerta(htmlbody, 'Buy '+itemP.title, '<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button><button type="button" class="btn btn-primary app_back app_color btnFinishBuy">Buy</button>');
+					app.alerta(htmlbody, 'Buy '+itemP.title, '<button type="button" class="btn btn-default" data-dismiss="modal">'+translator.getStr('cancel')+'</button><button type="button" class="btn btn-primary app_back app_color btnFinishBuy">'+translator.getStr('buy')+'</button>');
 				}
 			});
 			
@@ -2028,6 +2067,13 @@ var app = {
 				app.iniciarGaleria($(this).data('itemgal'));
 			});
 			
+			$('#langsel').on('change',function(e) {
+				e.preventDefault();
+				defLang = $(this).val();
+				window.localStorage.setItem('lang', defLang);
+				app.cambiarIdioma();
+			});
+			
 			$('.itemsIntContent').on('click','.rate_stars .fa',function(e) {
 				e.preventDefault();
 				var itemnew = '<b>Rate '+$(this).data('rname')+'</b><br>';
@@ -2041,14 +2087,14 @@ var app = {
 				'		'+itemnew+
 				'	</div>'+
 				'	<div class="col-md-12">'+
-				'		<textarea class="form-control" type="text" id="rate_hotel_text" placeholder="Notes"></textarea>'+
+				'		<textarea class="form-control" type="text" id="rate_hotel_text" placeholder="'+translator.getStr('notes')+'"></textarea>'+
 				'	</div>'+
 				'	<div class="col-md-12">'+
 				'		<div class="form-group" id="resmeseve2">'+
 				'		</div>'+
 				'	</div>'+
 				'</div>';
-				app.alerta(htmlbody, 'Rate '+$(this).data('rname'), '<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button><button type="button" class="btn btn-primary app_back app_color sendthisrate" data-star="'+$(this).data('star')+'" data-rname="'+$(this).data('rname')+'" data-type="'+$(this).data('type')+'">Rate</button>');
+				app.alerta(htmlbody, 'Rate '+$(this).data('rname'), '<button type="button" class="btn btn-default" data-dismiss="modal">'+translator.getStr('cancel')+'</button><button type="button" class="btn btn-primary app_back app_color sendthisrate" data-star="'+$(this).data('star')+'" data-rname="'+$(this).data('rname')+'" data-type="'+$(this).data('type')+'">'+translator.getStr('rate')+'</button>');
 			});
 			
 			$('#alerta').on('click','.sendthisrate',function(e) {
@@ -2183,7 +2229,7 @@ var app = {
 			'		'+data.message+
 			'	</div>'+
 			'</div>';
-			app.alerta(htmlbody, data.title, '<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>');
+			app.alerta(htmlbody, data.title, '<button type="button" class="btn btn-default" data-dismiss="modal">'+translator.getStr('close')+'</button>');
        });
     },
 	pad_with_zeroes: function(number, length) {
