@@ -2171,6 +2171,12 @@ var app = {
         });
 
         push.on('notification', function(data) {
+			
+			push.setApplicationIconBadgeNumber(() => {
+				console.log('success');
+			}, () => {
+				console.log('error');
+			}, 0);
             
 			var htmlbody = '<div class="row">'+
 			'	<div class="col-md-12">'+

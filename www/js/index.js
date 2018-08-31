@@ -968,6 +968,12 @@ var app = {
 		if(messagge.type==1) {
 			$('#msgid_'+messagge.msgid+' i.fa-circle').remove();
 		}
+		var cantunread = $('.btnViewMessage i.fa-circle').size();
+		var bubmsg = '';
+		if(cantunread>0) {
+			bubmsg = '<span class="badge bg-red">'+cantunread+'</span>';
+		}
+		$('#messageslinkhome').append(bubmsg);
 		var msgscont = '		<div class="mail_Content">'+
 						'			<div class="mail_heading row">'+
 						'				<div class="col-md-4 text-right">'+
@@ -2171,6 +2177,12 @@ var app = {
         });
 
         push.on('notification', function(data) {
+			
+			push.setApplicationIconBadgeNumber(() => {
+				console.log('success');
+			}, () => {
+				console.log('error');
+			}, 0);
             
 			var htmlbody = '<div class="row">'+
 			'	<div class="col-md-12">'+
