@@ -1004,6 +1004,7 @@ var app = {
 					enviando = false;
 					if(data.res) {
 						if(data.unreadmessages>0) {
+							$('#messageslinkhome .badge').remorve();
 							$('#messageslinkhome').append('<span class="badge bg-red">'+data.unreadmessages+'</span>');
 						}
 						app.putMessage(data.data);
@@ -1030,6 +1031,7 @@ var app = {
 		if(cantunread>0) {
 			bubmsg = '<span class="badge bg-red">'+cantunread+'</span>';
 		}
+		$('#messageslinkhome .badge').remorve();
 		$('#messageslinkhome').append(bubmsg);
 		var msgscont = '		<div class="mail_Content">'+
 						'			<div class="mail_heading row">'+
@@ -2239,6 +2241,12 @@ var app = {
         push.on('error', function(e) {
             alert("push error = " + e.message);
         });
+			
+		push.setApplicationIconBadgeNumber(() => {
+			console.log('success');
+		}, () => {
+			console.log('error');
+		}, 0);
 
         push.on('notification', function(data) {
 			
