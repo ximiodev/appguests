@@ -120,7 +120,9 @@ var app = {
 						//~ alert(language.value);
 						app.cambiarIdioma();
 					},
-					function () {//alert("nada")}
+					function () {
+						//alert("nada") 
+					}
 				);
 			} else {
 				//~ alert("sin globalization");
@@ -154,6 +156,7 @@ var app = {
 							app.configureHotel();
 							loginUser = true;
 							localStorage.setItem('userlogin', user_data.guestID);
+							sessionId = localStorage.getItem('userlogin');
 							app.removeLogin();
 							app.setupPush();
 							app.startApp();
@@ -2402,6 +2405,7 @@ var en = {
     settings:"Settings",
     lang:"Lang",
     to_calendar:"to calendar",
+    notifications:"Notifications",
     rate:"Rate"
 };
 var es = {
@@ -2505,5 +2509,6 @@ var es = {
     settings:"Ajustes",
     lang:"Idioma",
     to_calendar: "al calendario",
+    notifications:"Notificaciones",
     rate: "Calificar"
 };
