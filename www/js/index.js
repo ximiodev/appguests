@@ -116,13 +116,14 @@ var app = {
 						defLang = language.value.substring(0, 2);
 						defLang = (defLang=='en' || defLang=='es' || defLang=='pt')?defLang:'en';
 						window.localStorage.setItem('lang', defLang);
-						alert(language.value);
+						window.localStorage.setItem('launchCount', 1);
+						//~ alert(language.value);
 						app.cambiarIdioma();
 					},
-					function () {alert("nada")}
+					function () {//alert("nada")}
 				);
 			} else {
-				alert("sin globalization");
+				//~ alert("sin globalization");
 			}
 		}
 		
