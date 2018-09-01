@@ -104,7 +104,6 @@ var app = {
     },
     onDeviceReady: function() {
 		user_platform = device.platform;
-		window.localStorage.setItem('launchCount', null);
 		var applaunchCount = 0;
 		if(window.localStorage.getItem('launchCount')!='' && window.localStorage.getItem('launchCount')!=0 && window.localStorage.getItem('launchCount')!=null) {
 			applaunchCount = window.localStorage.getItem('launchCount');
@@ -122,6 +121,8 @@ var app = {
 					},
 					function () {alert("nada")}
 				);
+			} else {
+				alert("sin globalization");
 			}
 		}
 		
@@ -1004,7 +1005,7 @@ var app = {
 					enviando = false;
 					if(data.res) {
 						if(data.unreadmessages>0) {
-							$('#messageslinkhome .badge').remorve();
+							$('#messageslinkhome .badge').remove();
 							$('#messageslinkhome').append('<span class="badge bg-red">'+data.unreadmessages+'</span>');
 						}
 						app.putMessage(data.data);
@@ -1031,7 +1032,7 @@ var app = {
 		if(cantunread>0) {
 			bubmsg = '<span class="badge bg-red">'+cantunread+'</span>';
 		}
-		$('#messageslinkhome .badge').remorve();
+		$('#messageslinkhome .badge').remove();
 		$('#messageslinkhome').append(bubmsg);
 		var msgscont = '		<div class="mail_Content">'+
 						'			<div class="mail_heading row">'+
