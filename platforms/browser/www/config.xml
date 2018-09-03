@@ -20,7 +20,7 @@
     <allow-intent href="mailto:*" />
     <allow-intent href="geo:*" />
     <preference name="DisallowOverscroll" value="true" />
-    <preference name="android-minSdkVersion" value="15" />
+    <preference name="android-minSdkVersion" value="19" />
     <preference name="StatusBarOverlaysWebView" value="false" />
     <preference name="StatusBarBackgroundColor" value="#900000" />
     <preference name="android-build-tool" value="gradle" />
