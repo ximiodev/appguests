@@ -2287,7 +2287,7 @@ var app = {
 					if (deviceType!="Android") {
 						cordova.plugins.market.open('id1415131786');
 					} else if (deviceType=="Android") {
-						cordova.plugins.market.open('com.sof.whereismycar');
+						cordova.plugins.market.open('com.ximiodev.smartbellboy');
 					}
 					rateapp_co = false;
 				} else if (button == '2') { // Later
