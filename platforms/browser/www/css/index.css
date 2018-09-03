@@ -761,3 +761,69 @@ span.fa.fa-star.checked {
 .settings_cont label {
     font-size: 18px;
 }
+
+.btnViewAllPurchases {
+    width: 100%;
+}
+
+.totalpurchase {
+    font-size: 18px;
+    padding: 15px;
+    text-align: center;
+}
+
+.contAllPurchases {
+    width: 100%;
+    padding: 15px;
+}
+
+.itemSettings {
+    padding-bottom: 15px;
+    border-bottom: 1px solid #ccc;
+    margin-bottom: 15px;
+    padding: 0 0 15px;
+}
+
+.col_2S .checkbox {
+    margin: 0;
+    margin-top: 0;
+}
+
+.col_1S a { 
+	color: #000000;
+	text-decoration: none;
+	display: block;
+}
+
+.col_1S.col_1S_one {
+	width: 100%;
+}
+
+.col_1S {
+    width: 50%;
+    float: left;
+    font-size: 18px;
+    line-height: 34px;
+}
+
+.col_2S {
+    width: 50%;
+    float: left;
+}
+
+.infocont {
+    padding: 25px;
+    font-size: 16px;
+}
+
+.itemSettings:after {
+    content: ' ';
+    position: relative;
+    clear: both;
+    display: block;
+}
+
+.settings_cont label {
+    font-size: 18px;
+    line-height: 34px;
+}

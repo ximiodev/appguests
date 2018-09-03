@@ -312,29 +312,41 @@
 					<div class="itemsIntContent">
 						<div class="settings_cont">
 							<div class="">
-								<div class="form-group">
-									<label for="changelang" data-textlang="lang">Lang</label>
-									<select class="form-control" id="langsel" >
-										<option value="en">English</option>
-										<option value="es">Español</option>
-									</select>
-								</div>
-								
-								<div class="form-group">
-									<div class="checkbox">
-										<label for="notify_cell" style="font-size: 1.5em">
-											<input type="checkbox" checked name="notifications" id="notifications" value="1" >
-											<span class="cr"><i class="cr-icon fa fa-check"></i></span>
-											<span data-textlang="notifications">Notifications</span>
-										</label>
+								<div class="itemSettings">
+									<div class="col_1S"><label for="changelang" data-textlang="lang">Lang</label></div>
+									<div class="col_2S">
+										<select class="form-control" id="langsel" >
+											<option value="en">English</option>
+											<option value="es">Español</option>
+											<option value="pt">Português</option>
+										</select>
 									</div>
+								</div>
+								<div class="itemSettings">
+									<div class="col_1S"><span data-textlang="notifications">Notifications</span></div>
+									<div class="col_2S">
+										<div class="checkbox">
+											<label for="notifications" style="font-size: 1.5em">
+												<input type="checkbox" checked name="notifications" id="notifications" value="1" >
+												<span class="cr"><i class="cr-icon fa fa-check"></i></span>
+											</label>
+										</div>
+									</div>
+								</div>
+								<div class="itemSettings">
+									<div class="col_1S col_1S_one"><a href="#" data-textlang="rate_app_now" class="btnRateApp">Rate App</a></div>
+								</div>
+								<div class="itemSettings">
+									<div class="col_1S col_1S_one"><a href="#" class="btnInfoApp">Info</a></div>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
 				<div class="col-md-12 sections_uno hidden" id="section_Rating">
-					<h3 class="titBlockInt app_back app_color"><button class="btnBackSecUno"><i class="fa fa-arrow-left"></i></button> <span data-textlang="rate_our_services">Rate our Services</span></button></h3>
+					<h3 class="titBlockInt app_back app_color">
+						<button class="btnBackSecUno"><i class="fa fa-arrow-left"></i></button> <span data-textlang="rate_our_services">Rate our Services</span>
+					</h3>
 					<div class="itemsIntContent">
 						<table class="tablerate app_color_inv">
 							<tr id="rate_type_0">
@@ -419,6 +431,17 @@
 					<div class="itemsIntContent">
 					</div>
 				</div>
+				<div class="col-md-12 sections_dos hidden" id="section_MyShops">
+					<h3 class="titBlockInt app_back app_color"><button class="btnBackSecDos"><i class="fa fa-arrow-left"></i></button> <span class="titleElement" data-textlang="my_shops">My Shops</span></h3>
+					<div class="itemsIntContent">
+					</div>
+				</div>
+				<div class="col-md-12 sections_dos hidden" id="section_InfoApp">
+					<h3 class="titBlockInt app_back app_color"><button class="btnBackSecDos"><i class="fa fa-arrow-left"></i></button> <span class="titleElement" >Info</span></h3>
+					<div class="itemsIntContent">
+						<div class="infocont" data-textlang="info_app"></div>
+					</div>
+				</div>
 			</div>		
 		</div>
 		<!-- Modal -->
@@ -445,6 +468,7 @@
 		<script type="text/javascript" src="js/photoswipe-ui-default.min.js"></script>
 		<script type="text/javascript" src="js/moment.min.js"></script>
 		<script type="text/javascript" src="js/fullcalendar.min.js"></script>
+		<script type="text/javascript" src="js/locales/locale-all.js"></script>
 		<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAxZ8eRh-497KEVJzpygWiyZSXHqo2O0lM"></script>
 		<script type="text/javascript" src="js/index.js"></script>
 		<script type="text/javascript">

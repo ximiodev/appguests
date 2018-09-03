@@ -4,6 +4,7 @@ var user_data;
 var user_hotel;
 var defLang;
 var enviando = false;
+var rateapp_co = 2;
 var segudnop = false;
 var galeryCont = new Array();
 var prodsArr = new Array();
@@ -38,6 +39,9 @@ var language = {
 		switch(defLang) {
 			case 'es':
 				lango = es;
+				break;
+			case 'pt':
+				lango = pt;
 				break;
 			default:
 				lango = en;
@@ -101,6 +105,10 @@ var app = {
 				$(this).html(translator.getStr(lkey));
 			}
 		});
+		$("#langsel").val(defLang);
+		if(calendar!=undefined) {
+			calendar.fullCalendar('option', 'locale', defLang);
+		}
     },
     onDeviceReady: function() {
 		user_platform = device.platform;
@@ -127,6 +135,11 @@ var app = {
 			} else {
 				//~ alert("sin globalization");
 			}
+		}
+		
+		
+		if(window.localStorage.getItem('rateapp_co')!='' && window.localStorage.getItem('rateapp_co')!=null) {
+			rateapp_co = window.localStorage.getItem('rateapp_co');
 		}
 		
 		$('.ncopy').html(ncopy);
@@ -305,7 +318,6 @@ var app = {
 		if(section=='Rating') {
 			setTimeout(function() {
 				$('#homescreen').addClass('menuopened');
-				console.log("poasd");
 			}, 400);
 		}
     },
@@ -471,6 +483,28 @@ var app = {
 											'';
 								desdedonde.append(itemnew);
 							});
+						}
+						$('#section_MyShops .itemsIntContent').html('');
+						if(data.shops.length>0) {
+							var total = 0;
+							desdedonde.prepend('<div class="contAllPurchases"><button class="btn btn-primary btnViewAllPurchases app_back app_color">'+translator.getStr('view_all_purchase')+'</button></div>');
+							$.each(data.shops, function(idx, item) {
+								total += parseFloat(item.price);
+								var detalles = (item.details)?'			<div class="textHomeBlock">'+item.details+'</div>':'';
+								var itemnew = '<div class="itemHomeBlock">'+
+											'		<div class="imgHomeBlock" style="background-image: url('+item.image+');"></div>'+
+											'		<div class="contHomeBlock">'+
+											'			<h4 class="titHomeBlock">'+item.title+'</h4>'+
+											'			<div class="textHomeBlock"><b>$ '+item.price+'</b></div>'+
+											detalles+
+											'			<div class="textHomeBlock"><b>'+translator.getStr('date')+':</b> '+item.date+'</div>'+
+											'			<div class="textHomeBlock"><b>'+translator.getStr('state')+':</b> '+item.state+'</div>'+
+											'		</div>'+
+											'	</div>'+
+											'';
+								$('#section_MyShops .itemsIntContent').append(itemnew);
+							});
+							$('#section_MyShops .itemsIntContent').append('<div class="totalpurchase"><b>'+translator.getStr('total_spend')+' $'+total+'</b></div>');
 						}
 					} else {
 						desdedonde.html('<div class="alert alert-info"><b>'+translator.getStr('there_are_no_tiems_to_buy')+'</b></div>');
@@ -670,7 +704,7 @@ var app = {
 						desdedonde.html('');
 						if(data.data.length>0) {
 							$.each(data.data, function(idx, item) {
-								var reservation = (item.reservation=="1")?translator.getStr('requiere_reservation'):'';
+								var reservation = (item.reservation=="1")?translator.getStr('requires_reservation'):'';
 								var itemnew = '<div class="itemHomeBlock">'+
 											'		<div class="imgHomeBlock" style="background-image: url('+item.image+');"></div>'+
 											'		<div class="contHomeBlock">'+
@@ -717,7 +751,7 @@ var app = {
 						desdedonde.html('');
 						var item = data.data;
 						activitySelected = item;
-						var reservation = (item.reservation=="1")?translator.getStr('requiere_reservation'):'';
+						var reservation = (item.reservation=="1")?translator.getStr('requires_reservation'):'';
 						var imgeve = (item.image!="")?'	<div class="event_pic"><img src="'+item.image+'" class="event_img"></div>':'';
 						var link = (item.link!="")?'	<a href="'+item.link+'" class="linkinfo app_color_inv" target="_blank">'+translator.getStr('view_link')+'</a>':'';
 						var actdate = (item.date!=' ')?item.date:item.date_a;
@@ -859,7 +893,7 @@ var app = {
 								'	<td><b>'+translator.getStr('priority')+': </b> <span class="label label-'+labelPrio+'">'+item.priority+'</span></td>'+
 								'	<td><b>'+translator.getStr('type')+': </b> '+item.type+'</td>'+
 								'</tr><tr>'+
-								'	<td><b>State: </b> <span class="label label-'+labelState+'">'+item.state+'</span></td>'+
+								'	<td><b>'+translator.getStr('state')+': </b> <span class="label label-'+labelState+'">'+item.state+'</span></td>'+
 								'	<td><button data-alarm="'+item.alid+'" class="btn btn-primary btn-xs btnViewAlarm app_back app_color"><i class="fa fa-eye"></i> '+translator.getStr('view_details')+'</button></td>'+
 								'</tr>';
 								table+='</table>';
@@ -1417,6 +1451,7 @@ var app = {
 				center: "title",
 				right: "month,agendaWeek,agendaDay,listMonth"
 			},
+			locale: defLang,
 			selectable: true,
 			events: userevents,
 			dayClick: function (date, jsEvent, view) {
@@ -1824,6 +1859,8 @@ var app = {
 			}
 		}, false);
 		$(document).ready(function() {
+			setTimeout(app.mostrarPuntuarApp, 35000);
+			
 			$(".form_datetime").datetimepicker({
 				format: 'yyyy-mm-dd hh:ii',
 				inline: true,
@@ -1958,6 +1995,11 @@ var app = {
 				$('#section_Message_int .itemsIntContent').html('');
 				$('#section_Message_int .titleElement').html('');
 				app.putFullSectionInt('Message_int', $(this).data('msgid'));
+			});
+			
+			$('.itemsIntContent').on('click','.btnViewAllPurchases',function(e) {
+				e.preventDefault();
+				app.putFullSectionInt('MyShops', 0);
 			});
 			
 			$('.itemsIntContent').on('click','.btnAddEvent',function(e) {
@@ -2098,6 +2140,16 @@ var app = {
 				app.iniciarGaleria($(this).data('itemgal'));
 			});
 			
+			$('.btnRateApp').click(function(e) {
+				e.preventDefault();
+				app.mostrarPuntuarApp();
+			});
+			
+			$('.btnInfoApp').click(function(e) {
+				e.preventDefault();
+				app.putFullSectionInt('InfoApp', 0);
+			});
+			
 			$('#langsel').on('change',function(e) {
 				e.preventDefault();
 				defLang = $(this).val();
@@ -2107,7 +2159,7 @@ var app = {
 			
 			$('.itemsIntContent').on('click','.rate_stars .fa',function(e) {
 				e.preventDefault();
-				var itemnew = '<b>Rate '+$(this).data('rname')+'</b><br>';
+				var itemnew = '<b>'+translator.getStr('rate')+' '+$(this).data('rname')+'</b><br>';
 				for(var i=1;i<=5;i++) {
 					var ischeck = (i<=$(this).data('star'))?' checked':'';
 					itemnew += '<span class="fa fa-star'+ischeck+'" ></span>';
@@ -2125,7 +2177,7 @@ var app = {
 				'		</div>'+
 				'	</div>'+
 				'</div>';
-				app.alerta(htmlbody, 'Rate '+$(this).data('rname'), '<button type="button" class="btn btn-default" data-dismiss="modal">'+translator.getStr('cancel')+'</button><button type="button" class="btn btn-primary app_back app_color sendthisrate" data-star="'+$(this).data('star')+'" data-rname="'+$(this).data('rname')+'" data-type="'+$(this).data('type')+'">'+translator.getStr('rate')+'</button>');
+				app.alerta(htmlbody, translator.getStr('rate')+' '+$(this).data('rname'), '<button type="button" class="btn btn-default" data-dismiss="modal">'+translator.getStr('cancel')+'</button><button type="button" class="btn btn-primary app_back app_color sendthisrate" data-star="'+$(this).data('star')+'" data-rname="'+$(this).data('rname')+'" data-type="'+$(this).data('type')+'">'+translator.getStr('rate')+'</button>');
 			});
 			
 			$('#alerta').on('click','.sendthisrate',function(e) {
@@ -2142,6 +2194,30 @@ var app = {
 					$( "#left-panel" ).animate( {left: "-100%"},500 , function() {$('.screenapp').removeClass('menuopened');});
 				}
 				secTipo = 0;
+			});
+    
+			$('#notifications').on('change', function(e) {
+				e.preventDefault();
+				
+				var oldRegId = localStorage.getItem('registrationId');
+				var datos = {
+					'action':'updateTokenUser',
+					'sessionId': sessionId,
+					'usertoken': oldRegId,
+					'state': $(this).is(':checked')
+				}
+				$.ajax({
+					type: 'POST',
+					data: datos,
+					dataType: 'json',
+					url: apiURL,
+					success: function (data) {
+						if(data.res) {
+						}
+					},
+					error : function(xhr, ajaxOptions, thrownError) {
+					}
+				});
 			});
 			
 			$( "#left-panel" ).swipe( {
@@ -2200,6 +2276,31 @@ var app = {
 			$('.ventanashomeCont').css('height',$('.panel_home').height());
 		});
     },
+    mostrarPuntuarApp: function() {
+		if (rateapp_co==1 || rateapp_co==2) {
+			navigator.notification.confirm(
+			translator.getStr("text_rate_app"),
+			function(button) {
+				// yes = 1, no = 2, later = 3
+				var deviceType = (navigator.userAgent.match(/iPad/i))  == "iPad" ? "iPad" : (navigator.userAgent.match(/iPhone/i))  == "iPhone" ? "iPhone" : (navigator.userAgent.match(/Android/i)) == "Android" ? "Android" : (navigator.userAgent.match(/BlackBerry/i)) == "BlackBerry" ? "BlackBerry" : "null";
+				if (button == '1') {    // Rate Now
+					if (deviceType!="Android") {
+						cordova.plugins.market.open('id1415131786');
+					} else if (deviceType=="Android") {
+						cordova.plugins.market.open('com.sof.whereismycar');
+					}
+					rateapp_co = false;
+				} else if (button == '2') { // Later
+					rateapp_co = 1;
+				} else if (button == '3') { // No
+					rateapp_co = false;
+				}
+				window.localStorage.setItem('rateapp_co',rateapp_co); 
+			}, translator.getStr("rate_app_now"), [translator.getStr("rate_app_now"), translator.getStr("rate_app_later"), translator.getStr("rate_app_no")]);
+		} else {
+			//~ alerta(rateapp_co);
+		}
+    },
     setupPush: function() {
         var push = PushNotification.init({
             "android": {
@@ -2215,13 +2316,9 @@ var app = {
         });
 
         push.on('registration', function(data) {
-            console.log('registration event: ' + data.registrationId);
-
             var oldRegId = localStorage.getItem('registrationId');
             if (oldRegId !== data.registrationId) {
-                // Save new registration ID
                 localStorage.setItem('registrationId', data.registrationId);
-                // Post registrationId to your app server as the value has changed
             }
             var datos = {
 				'action':'saveTokenUser',
@@ -2235,6 +2332,7 @@ var app = {
 				url: apiURL,
 				success: function (data) {
 					if(data.res) {
+						$('#notifications').attr('checked', data.state);
 					}
 				},
 				error : function(xhr, ajaxOptions, thrownError) {
@@ -2362,7 +2460,7 @@ var en = {
     there_are_no_promotions:"There are no promotions.",
     there_are_no_activities:"There are no activities.",
     promotion_not_found:"Promotion not found.",
-    requiere_reservation:"Requiere reservation",
+    requires_reservation:"Requiere reservation",
     view_link:"View link",
     added_to_calendar:"Added to calendar",
     add_to_calendar:"Add to calendar",
@@ -2406,7 +2504,15 @@ var en = {
     lang:"Lang",
     to_calendar:"to calendar",
     notifications:"Notifications",
-    rate:"Rate"
+    my_shops:"My Shops",
+    view_all_purchase:"View my purchases",
+    rate:"Rate",
+    total_spend: "Total purchases",
+	text_rate_app: "If you like SmartBellboy, would you mind taking a moment to rate it? It will not take more than a minute. Thanks for your support!",
+	rate_app_now: "Rate SmartBellboy",
+	rate_app_later: "Remind me later",
+	rate_app_no: "No Thanks",
+	info_app: "Smartbellboy is a tool developed as part of a large hotel guest management system. <br> Developed by ximiodev, a company dedicated to the development of sowftare, focused on providing the best solution for each client. <br> <br> If you wish, you can contact us at <a href=\"mailto:info@smartbellboy.com/\">info@smartbellboy.com</a> or <a href=\"info@ximiodev.com\" >info@ximiodev.com</a>. <br><br><a href=\"https://www.smartebellboy.com/\" >https://www.smartebellboy.com/<br><a href=\"https://www.ximiodev.com/\">https://www.ximiodev.com/</a><br>"
 };
 var es = {
     all_right_reserv: "Todos los derechos reservados.",
@@ -2466,7 +2572,7 @@ var es = {
     there_are_no_promotions: "No hay promociones",
     there_are_no_activities: "No hay actividades.",
     promotion_not_found: "Promoción no encontrada.",
-    requiere_reservation: "requiere reserva",
+    requires_reservation: "requiere reserva",
     view_link: "Ver enlace",
     added_to_calendar: "Agregado al calendario",
     add_to_calendar: "Agregar al calendario",
@@ -2510,5 +2616,126 @@ var es = {
     lang:"Idioma",
     to_calendar: "al calendario",
     notifications:"Notificaciones",
-    rate: "Calificar"
+    view_all_purchase:"Ver mis compras",
+    my_shops:"Mis compras",
+    rate: "Calificar",
+    total_spend: "Total de las compras",
+	text_rate_app: "Si te gusta usar SmartBellboy, ¿te importaría tomar un momento para calificarlo? No llevará más de un minuto. ¡Gracias por su apoyo!",
+	rate_app_now: "Calificar SmartBellboy",
+	rate_app_later: "Recuérdame más tarde",
+	rate_app_no: "No, gracias",
+	info_app: "Smartbellboy es una herramienta desarrollada como parte de un gran sistema de gestión de huéspedes de hotel. <br>Desarrollada por ximiodev, una empresa dedicada al desarrollo de sowftare, enfocada a brindar la mejor solución para cada cliente.<br><br>Si lo desea puede contactarse con nosotros  a info@smartbellboy.com o en info@ximiodev.com. <br><br><a href=\"https://www.smartebellboy.com/\" >https://www.smartebellboy.com/<br><a href=\"https://www.ximiodev.com/\">https://www.ximiodev.com/</a><br>"
+};
+
+var pt = {
+	all_right_reserv: "Todos os direitos reservados.",
+	alarms: "Alarmes",
+	shop: "Comprar",
+	messages: "Mensagens",
+	events: "Eventos",
+	activities: "Atividades",
+	brochures: "Brochuras",
+	promotions: "Promoções",
+	news: "Notícias",
+	gallery: "Galeria",
+	rate_us: "Avalie-nos",
+	logout: "Logout",
+	quick_actions: "Atalhos",
+	your_calendar: "Seu calendário",
+	next_events: "Próximos eventos",
+	last_news: "Últimas notícias",
+	create_new_alarm: "Criar novo alarme",
+	view_all_alarms: "Ver todos os alarmes",
+	date_y_time: "Data e hora",
+	alarms_type: "tipo de alarme",
+	priority: "Prioridade",
+	notify_phone: "Notificar por telefone no quarto",
+	notify_cellphone: "Notificar por celular",
+	notify_email: "Notificar por email",
+	notify_push: "Notificar via notificação push",
+	notes: "Notas",
+	title: "Título",
+	save: "Salvar",
+	create_new_message: "Criar nova mensagem",
+	view_all_messages: "Ver todas as mensagens",
+	subject: "Assunto",
+	your_message: "Sua mensagem",
+	send: "enviar",
+	hotel_info: "Informação do hotel",
+	phone: "Telefone",
+	web: "Web",
+	email: "Email",
+	rate_our_services: "Classifique nossos serviços",
+	roomservice_shop: "Serviço de quartos e loja",
+	breakfast: "Café da manhã",
+	food_drinks: "Comida e Bebida",
+	room: "Quarto",
+	services: "Serviços",
+	alert: "Alerta",
+	username_or_pass_inco: "Nome de usuário ou senha incorretos",
+	error_try_again: "Erro, tente novamente.",
+	error: "Erro",
+	loading: "Carregando ...",
+	there_are_no_news: "Nenhuma notícia",
+	buy: "Comprar",
+	there_are_no_tiems_to_buy: "Não há como comprar",
+	there_are_no_news: "Nenhuma notícia",
+	view_more: "Veja mais",
+	news_not_found: "Notícias não encontradas",
+	there_are_no_promotions: "Sem promoções",
+	there_are_no_activities: "Não há atividades",
+	promotion_not_found: "Promoção não encontrada",
+	requires_reservation: "requer reserva",
+	view_link: "ver link",
+	added_to_calendar: "Adicionado ao calendário",
+	add_to_calendar: "Adicionar ao calendário",
+	event_not_found: "Evento não encontrado.",
+	there_are_no_events: "Sem eventos",
+	event_not_found: "Evento não encontrado.",
+	date: "Data",
+	created_at: "Criado em",
+	priority: "Prioridade",
+	type: "Tipo",
+	view_details: "Ver detalhes",
+	you_have_no_alarms_saved: "Você não tem alarmes salvos",
+	state: "Estado",
+	alarm_not_found: "Alarme não encontrado",
+	read_message: "Ler mensagem",
+	you_have_no_messages: "Você não tem mensagens",
+	message_not_found: "Mensagem não encontrada.",
+	reply: "Responder",
+	your_message_was_sended: "Sua mensagem foi enviada",
+	select_a_valid_date: "Selecione uma data válida",
+	your_alarm_was_saved_successfully: "Seu alarme foi salvo corretamente",
+	thanks_for_rate_us: "Obrigado pela qualificação!",
+	write_a_message: "Escreva uma mensagem",
+	write_a_subject: "Escreva um tópico.",
+	no_brochures_to_download: "Não há brochuras para download.",
+	add_new_event_to_calendar: "Adicionar novo evento ao calendário",
+	cancel: "Cancelar",
+	close: "Fechar",
+	event_no_created: "Evento não criado. Tente mais tarde",
+	activity_no_created: "Atividade não criada. Tente novamente mais tarde.",
+	purchase_no_created: "Compra não registrada. Tente mais tarde",
+	event_added_to_calendar: "O evento foi adicionado ao seu calendário",
+	event_added: "Evento adicionado",
+	activity_added_to_calendar: "A atividade foi adicionada ao seu calendário",
+	activity_require_reservation: "Esta atividade requer uma reserva, entraremos em contato quando a reserva entrar em vigor",
+	purchase_registered: "Compra registrada",
+	title_time_required: "O título e a hora são obrigatórios",
+	chose_prefered_date_time: "Escolha a data e a hora preferidas",
+	add: "Adicionar",
+	Configurações: "Configurações",
+	idioma: "Language",
+	to_calendar: "para o calendário",
+	notifications: "Notificações",
+	view_all_purchase: "Veja minhas compras",
+	my_shops: "Minhas compras",
+	rate: "Taxa",
+	total_spend: "compras totais",
+	text_rate_app: "Se você gosta de usar o SmartBellboy, você se importaria em avaliar isso? Não vai demorar mais que um minuto, obrigado pelo seu apoio!",
+	rate_app_now: "Classifique o SmartBellboy",
+	rate_app_later: "Lembre-me mais tarde",
+	rate_app_no: "Não, obrigado",
+	info_app: "Smartbellboy é uma ferramenta desenvolvida como parte de um sistema de gerenciamento de maior convidados Hotel & Desenvolvido por ximiodev, uma empresa dedicada ao desenvolvimento de sowftare, focada em fornecer a melhor solução para cada cliente <br> <. br> Por favor, contacte-nos em info@smartbellboy.com ou info@ximiodev.com <br> <a href=\"https://www.smartebellboy.com/\"> https .: //www.smartebellboy.com/ <br> <a href=\"https://www.ximiodev.com/\"> https://www.ximiodev.com/ </a> <br> "
 };
