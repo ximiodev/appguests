@@ -1,16 +1,17 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.ximiodev.smartbellboy" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0" xmlns:gap="http://phonegap.com/ns/1.0">
+<widget id="com.ximiodev.smartbellboy" version="1.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0" xmlns:gap="http://phonegap.com/ns/1.0">
     <feature name="Device">
         <param name="browser-package" value="Device" />
     </feature>
     <name>Smart Bellboy</name>
     <description>
-        Push sample application that receives push notifications.
+        Save time. Enjoy more.
     </description>
-    <author email="support@phonegap.com" href="http://phonegap.com">
-        PhoneGap Team
+    <author email="falvarino@ximiodev.com" href="http://ximiodev.com">
+        Samrt Bellboy
     </author>
     <content src="index.html" />
+    <icon src="www/res/icon/android/drawable-ldpi-icon.png" />
     <access origin="*" />
     <access launch-external="yes" origin="geo:*" />
     <allow-intent href="http://*/*" />
@@ -20,8 +21,8 @@
     <allow-intent href="mailto:*" />
     <allow-intent href="geo:*" />
     <preference name="DisallowOverscroll" value="true" />
-    <preference name="android-minSdkVersion" value="26" />
-    <preference name="android-targetSdkVersion" value="26" />
+    <preference name="android-minSdkVersion" value="23" />
+    <preference name="android-targetSdkVersion" value="23" />
     <preference name="StatusBarOverlaysWebView" value="false" />
     <preference name="StatusBarBackgroundColor" value="#900000" />
     <preference name="android-build-tool" value="gradle" />

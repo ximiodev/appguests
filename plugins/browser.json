@@ -25,12 +25,6 @@
         },
         "cordova-plugin-device": {
             "PACKAGE_NAME": "com.ximiodev.smartbellboy"
-        },
-        "cordova-plugin-globalization": {
-            "PACKAGE_NAME": "com.ximiodev.smartbellboy"
-        },
-        "cordova-plugin-market": {
-            "PACKAGE_NAME": "com.ximiodev.smartbellboy"
         }
     },
     "dependent_plugins": {}

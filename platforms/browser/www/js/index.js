@@ -32,7 +32,6 @@ function validateEmail(email) {
   var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   return re.test(email);
 }
-
 var language = {
 	getStr: function(str, defaultStr) {
 		var lango;
@@ -106,8 +105,12 @@ var app = {
 			}
 		});
 		$("#langsel").val(defLang);
-		if(calendar!=undefined) {
-			calendar.fullCalendar('option', 'locale', defLang);
+		if( typeof ($.fn.fullCalendar) === 'undefined'){ 
+		} else {
+			try {
+				calendar.fullCalendar('option', 'locale', defLang);
+			} catch(err) {
+			}
 		}
     },
     onDeviceReady: function() {
@@ -1580,7 +1583,7 @@ var app = {
 			$('#messageslinkhome').append('<span class="badge bg-red">'+user_hotel.unreadmessages+'</span>');
 		}
     },
-    alerta: function(cuerpo,title='Alerta',buttonsfooter=''){
+    alerta: function(cuerpo,title,buttonsfooter){
 		var acciones = '<button type="button" class="btn btn-default" data-dismiss="modal">'+translator.getStr('close')+'</button>';
 		if(buttonsfooter!='') {
 			acciones = buttonsfooter;
@@ -1949,7 +1952,7 @@ var app = {
 				e.preventDefault();
 				app.changeHomeItem('panel_messages');
 				$('.col-de-3').removeClass('active');
-				$('#messageslinkhome').addClass('active');
+				$('#messageslinkhome').parent().addClass('active');
 				$('.btnBackSecUno').click();
 				$('#messagesubject').focus();
 			});
@@ -2142,7 +2145,12 @@ var app = {
 			
 			$('.btnRateApp').click(function(e) {
 				e.preventDefault();
-				app.mostrarPuntuarApp();
+				var deviceType = (navigator.userAgent.match(/iPad/i))  == "iPad" ? "iPad" : (navigator.userAgent.match(/iPhone/i))  == "iPhone" ? "iPhone" : (navigator.userAgent.match(/Android/i)) == "Android" ? "Android" : (navigator.userAgent.match(/BlackBerry/i)) == "BlackBerry" ? "BlackBerry" : "null";
+				if (deviceType!="Android") {
+					cordova.plugins.market.open('id1415131786');
+				} else if (deviceType=="Android") {
+					cordova.plugins.market.open('com.ximiodev.smartbellboy');
+				}
 			});
 			
 			$('.btnInfoApp').click(function(e) {
@@ -2345,17 +2353,17 @@ var app = {
             alert("push error = " + e.message);
         });
 			
-		push.setApplicationIconBadgeNumber(() => {
+		push.setApplicationIconBadgeNumber(function() {
 			console.log('success');
-		}, () => {
+		}, function() {
 			console.log('error');
 		}, 0);
 
         push.on('notification', function(data) {
 			
-			push.setApplicationIconBadgeNumber(() => {
+			push.setApplicationIconBadgeNumber(function() {
 				console.log('success');
-			}, () => {
+			}, function() {
 				console.log('error');
 			}, 0);
             
