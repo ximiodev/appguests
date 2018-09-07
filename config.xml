@@ -53,6 +53,7 @@
 	  <resource-file src="ringo.mp3" target="www/sonidos/ringo.mp3" />
 	</platform>
     <platform name="ios">
+		<icon height="1024" width="1024" src="www/res/icon/ios/ItunesArtwork@2x.png" />
         <icon height="57" platform="ios" src="www/res/icon/ios/icon.png" width="57" />
         <icon height="114" platform="ios" src="www/res/icon/ios/icon@2x.png" width="114" />
         <icon height="40" platform="ios" src="www/res/icon/ios/icon-40.png" width="40" />
