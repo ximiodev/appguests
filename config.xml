@@ -27,7 +27,7 @@
     <plugin name="cordova-plugin-market" source="npm" spec="1.2.0" />
     <plugin name="cordova-plugin-statusbar" source="npm" />
     <plugin name="cordova-plugin-globalization" source="npm" />
-	<icon src="www/res/icon/android/drawable-ldpi-icon.png" />
+	<icon src="www/res/icon/ios/icon-small@2x.png" />
     <platform name="android">
         <icon density="ldpi" src="www/res/icon/android/drawable-ldpi-icon.png" />
         <icon density="mdpi" src="www/res/icon/android/drawable-mdpi-icon.png" />
