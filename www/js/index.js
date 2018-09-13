@@ -2340,6 +2340,7 @@ var app = {
             var datos = {
 				'action':'saveTokenUser',
 				'sessionId': sessionId,
+				'plataforma': user_platform,
 				'usertoken': data.registrationId
 			}
 			$.ajax({
