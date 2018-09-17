@@ -55,7 +55,6 @@
     <platform name="ios">
 		<icon src="icon/ios/icon2.png" width="1024" height="1024" />
 		<resource-file src="GoogleService-Info.plist" />
-		<preference name="phonegap-version" value="cli-7.1.0" />
 		<icon height="1024" width="1024" src="www/res/icon/ios/ItunesArtwork@2x.png" />
         <icon height="57" platform="ios" src="www/res/icon/ios/icon.png" width="57" />
         <icon height="114" platform="ios" src="www/res/icon/ios/icon@2x.png" width="114" />
