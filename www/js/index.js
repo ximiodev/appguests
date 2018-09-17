@@ -2330,8 +2330,7 @@ var app = {
                 "sound": true,
                 "vibration": true,
                 "badge": true
-            },
-            "windows": {}
+            }
         });
 
         push.on('registration', function(data) {
