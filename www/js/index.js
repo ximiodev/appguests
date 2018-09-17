@@ -2389,9 +2389,7 @@ var app = {
 				app.alerta(htmlbody, data.title, '<button type="button" class="btn btn-default" data-dismiss="modal">'+translator.getStr('close')+'</button>');
 		   });
 	   } else {
-		   window.FirebasePlugin.grantPermission();
-		   window.FirebasePlugin.setBadgeNumber(0);
-		   window.FirebasePlugin.getToken(function(token) {
+		   FCMPlugin.getToken(function(token){
 				var oldRegId = localStorage.getItem('registrationId');
 				if (oldRegId !== token) {
 					localStorage.setItem('registrationId', token);
@@ -2416,10 +2414,8 @@ var app = {
 					}
 				});
 
-			}, function(error) {
-				console.error(error);
 			});
-			window.FirebasePlugin.onTokenRefresh(function(token) {
+		   FCMPlugin.onTokenRefresh(function(token){
 				var oldRegId = localStorage.getItem('registrationId');
 				if (oldRegId !== token) {
 					localStorage.setItem('registrationId', token);
@@ -2443,23 +2439,16 @@ var app = {
 					error : function(xhr, ajaxOptions, thrownError) {
 					}
 				});
-
-			}, function(error) {
-				console.error(error);
 			});
 			
-			window.FirebasePlugin.onNotificationOpen(function(notification) {
-				
-				window.FirebasePlugin.setBadgeNumber(0);
-				
+			FCMPlugin.onNotification(function(notification){
+								
 				var htmlbody = '<div class="row">'+
 				'	<div class="col-md-12">'+
 				'		'+notification.body+
 				'	</div>'+
 				'</div>';
 				app.alerta(htmlbody, notification.title, '<button type="button" class="btn btn-default" data-dismiss="modal">'+translator.getStr('close')+'</button>');
-			}, function(error) {
-				console.error(error);
 			});
 		}
     },

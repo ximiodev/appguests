@@ -54,7 +54,7 @@
 	  <resource-file src="ringo.mp3" target="www/sonidos/ringo.mp3" />
 	</platform>
     <platform name="ios">
-		<plugin name="cordova-plugin-firebase" spec="^2.0.0" />
+		<plugin name="cordova-plugin-fcm-push"  />
 		<icon src="icon/ios/icon2.png" width="1024" height="1024" />
 		<preference name="phonegap-version" value="cli-7.1.0" />
 		<icon height="1024" width="1024" src="www/res/icon/ios/ItunesArtwork@2x.png" />
