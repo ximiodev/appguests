@@ -2319,73 +2319,149 @@ var app = {
 		}
     },
     setupPush: function() {
-        var push = PushNotification.init({
-            "android": {
-                "senderID": "651262773142"
-            },
-            "browser": {},
-            "ios": {
-				"senderID": "651262773142",
-                "fcmSandbox": true,
-                "sound": true,
-                "vibration": true,
-                "badge": true
-            },
-            "windows": {}
-        });
-
-        push.on('registration', function(data) {
-            var oldRegId = localStorage.getItem('registrationId');
-            if (oldRegId !== data.registrationId) {
-                localStorage.setItem('registrationId', data.registrationId);
-            }
-            var datos = {
-				'action':'saveTokenUser',
-				'sessionId': sessionId,
-				'plataforma': user_platform,
-				'usertoken': data.registrationId
-			}
-			$.ajax({
-				type: 'POST',
-				data: datos,
-				dataType: 'json',
-				url: apiURL,
-				success: function (data) {
-					if(data.res) {
-						$('#notifications').attr('checked', data.state);
-					}
+		var deviceType = (navigator.userAgent.match(/iPad/i))  == "iPad" ? "iPad" : (navigator.userAgent.match(/iPhone/i))  == "iPhone" ? "iPhone" : (navigator.userAgent.match(/Android/i)) == "Android" ? "Android" : (navigator.userAgent.match(/BlackBerry/i)) == "BlackBerry" ? "BlackBerry" : "null";
+		if (deviceType!="Android") {
+			var push = PushNotification.init({
+				"android": {
+					"senderID": "651262773142"
 				},
-				error : function(xhr, ajaxOptions, thrownError) {
-				}
+				"browser": {},
+				"ios": {
+					"senderID": "651262773142",
+					"fcmSandbox": true,
+					"sound": true,
+					"vibration": true,
+					"badge": true
+				},
+				"windows": {}
 			});
 
-        });
+			push.on('registration', function(data) {
+				var oldRegId = localStorage.getItem('registrationId');
+				if (oldRegId !== data.registrationId) {
+					localStorage.setItem('registrationId', data.registrationId);
+				}
+				var datos = {
+					'action':'saveTokenUser',
+					'sessionId': sessionId,
+					'plataforma': user_platform,
+					'usertoken': data.registrationId
+				}
+				$.ajax({
+					type: 'POST',
+					data: datos,
+					dataType: 'json',
+					url: apiURL,
+					success: function (data) {
+						if(data.res) {
+							$('#notifications').attr('checked', data.state);
+						}
+					},
+					error : function(xhr, ajaxOptions, thrownError) {
+					}
+				});
 
-        push.on('error', function(e) {
-            alert("push error = " + e.message);
-        });
-			
-		push.setApplicationIconBadgeNumber(function() {
-			console.log('success');
-		}, function() {
-			console.log('error');
-		}, 0);
+			});
 
-        push.on('notification', function(data) {
-			
+			push.on('error', function(e) {
+				alert("push error = " + e.message);
+			});
+				
 			push.setApplicationIconBadgeNumber(function() {
 				console.log('success');
 			}, function() {
 				console.log('error');
 			}, 0);
-            
-			var htmlbody = '<div class="row">'+
-			'	<div class="col-md-12">'+
-			'		'+data.message+
-			'	</div>'+
-			'</div>';
-			app.alerta(htmlbody, data.title, '<button type="button" class="btn btn-default" data-dismiss="modal">'+translator.getStr('close')+'</button>');
-       });
+
+			push.on('notification', function(data) {
+				
+				push.setApplicationIconBadgeNumber(function() {
+					console.log('success');
+				}, function() {
+					console.log('error');
+				}, 0);
+				
+				var htmlbody = '<div class="row">'+
+				'	<div class="col-md-12">'+
+				'		'+data.message+
+				'	</div>'+
+				'</div>';
+				app.alerta(htmlbody, data.title, '<button type="button" class="btn btn-default" data-dismiss="modal">'+translator.getStr('close')+'</button>');
+		   });
+	   } else {
+		   window.FirebasePlugin.grantPermission();
+		   window.FirebasePlugin.setBadgeNumber(0);
+		   window.FirebasePlugin.getToken(function(token) {
+				var oldRegId = localStorage.getItem('registrationId');
+				if (oldRegId !== token) {
+					localStorage.setItem('registrationId', token);
+				}
+				var datos = {
+					'action':'saveTokenUser',
+					'sessionId': sessionId,
+					'plataforma': user_platform,
+					'usertoken': token
+				}
+				$.ajax({
+					type: 'POST',
+					data: datos,
+					dataType: 'json',
+					url: apiURL,
+					success: function (data) {
+						if(data.res) {
+							$('#notifications').attr('checked', data.state);
+						}
+					},
+					error : function(xhr, ajaxOptions, thrownError) {
+					}
+				});
+
+			}, function(error) {
+				console.error(error);
+			});
+			window.FirebasePlugin.onTokenRefresh(function(token) {
+				var oldRegId = localStorage.getItem('registrationId');
+				if (oldRegId !== token) {
+					localStorage.setItem('registrationId', token);
+				}
+				var datos = {
+					'action':'saveTokenUser',
+					'sessionId': sessionId,
+					'plataforma': user_platform,
+					'usertoken': token
+				}
+				$.ajax({
+					type: 'POST',
+					data: datos,
+					dataType: 'json',
+					url: apiURL,
+					success: function (data) {
+						if(data.res) {
+							$('#notifications').attr('checked', data.state);
+						}
+					},
+					error : function(xhr, ajaxOptions, thrownError) {
+					}
+				});
+
+			}, function(error) {
+				console.error(error);
+			});
+			
+			window.FirebasePlugin.onNotificationOpen(function(notification) {
+				
+				window.FirebasePlugin.setBadgeNumber(0);
+				
+				var htmlbody = '<div class="row">'+
+				'	<div class="col-md-12">'+
+				'		'+notification.body+
+				'	</div>'+
+				'</div>';
+				app.alerta(htmlbody, notification.title, '<button type="button" class="btn btn-default" data-dismiss="modal">'+translator.getStr('close')+'</button>');
+			}, function(error) {
+				console.error(error);
+			});
+		}
     },
 	pad_with_zeroes: function(number, length) {
 		var my_string = '' + number;

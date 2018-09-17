@@ -17,9 +17,6 @@
     <preference name="orientation" value="portrait" />
     <preference name="StatusBarStyle" value="blacktranslucent" />
     
-    <plugin name="phonegap-plugin-push" source="npm" spec="2.0.0" >
-        <variable name="SENDER_ID" value="651262773142" />
-    </plugin>
     <plugin name="cordova-plugin-device" source="npm" />
     <plugin name="cordova-plugin-console" source="npm" />
     <plugin name="cordova-plugin-dialogs" source="npm"  />
@@ -49,10 +46,15 @@
         <splash density="port-xxxhdpi" src="www/res/screen/android/drawable-port-xxxhdpi-screen.png" />
     </platform>
     <platform name="android">
+		
+		<plugin name="phonegap-plugin-push" source="npm" spec="1.9.0" >
+			<variable name="SENDER_ID" value="651262773142" />
+		</plugin>
 	  <resource-file src="google-services.json" target="www/google-services.json" />
 	  <resource-file src="ringo.mp3" target="www/sonidos/ringo.mp3" />
 	</platform>
     <platform name="ios">
+		<plugin name="cordova-plugin-firebase" spec="^2.0.0" />
 		<icon src="icon/ios/icon2.png" width="1024" height="1024" />
 		<preference name="phonegap-version" value="cli-7.1.0" />
 		<icon height="1024" width="1024" src="www/res/icon/ios/ItunesArtwork@2x.png" />
