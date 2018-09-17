@@ -77,6 +77,9 @@
     <asset src="src/browser/manifest.json" target="manifest.json"/>
   </platform>
   <platform name="ios">
+  <resource-file src="GoogleService-Info.plist" />
+</platform>
+  <platform name="ios">
     <config-file target="config.xml" parent="/*">
       <feature name="PushNotification">
         <param name="ios-package" value="PushPlugin"/>
