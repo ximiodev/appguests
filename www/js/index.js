@@ -149,6 +149,7 @@ var app = {
 			}
 		}
 		
+		sessionId = localStorage.getItem('userlogin');
 		
 		if(window.localStorage.getItem('rateapp_co')!='' && window.localStorage.getItem('rateapp_co')!=null) {
 			rateapp_co = window.localStorage.getItem('rateapp_co');
