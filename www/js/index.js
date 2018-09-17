@@ -2326,7 +2326,7 @@ var app = {
             "browser": {},
             "ios": {
 				"senderID": "651262773142",
-                "fcmSandbox": true,
+                "gsmSandbox": true,
                 "sound": true,
                 "vibration": true,
                 "badge": true
