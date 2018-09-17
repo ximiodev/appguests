@@ -24,6 +24,9 @@
     <plugin name="cordova-plugin-market" source="npm" spec="1.2.0" />
     <plugin name="cordova-plugin-statusbar" source="npm" />
     <plugin name="cordova-plugin-globalization" source="npm" />
+	<plugin name="phonegap-plugin-push" source="npm" >
+		<variable name="SENDER_ID" value="651262773142" />
+	</plugin>
 	<icon src="www/res/icon/ios/icon-small@2x.png" />
     <platform name="android">
         <icon density="ldpi" src="www/res/icon/android/drawable-ldpi-icon.png" />
@@ -46,9 +49,6 @@
         <splash density="port-xxxhdpi" src="www/res/screen/android/drawable-port-xxxhdpi-screen.png" />
     </platform>
     <platform name="android">
-		<plugin name="phonegap-plugin-push" source="npm" >
-			<variable name="SENDER_ID" value="651262773142" />
-		</plugin>
 	  <resource-file src="google-services.json" target="www/google-services.json" />
 	  <resource-file src="ringo.mp3" target="www/sonidos/ringo.mp3" />
 	</platform>
