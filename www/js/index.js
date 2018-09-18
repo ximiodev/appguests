@@ -205,6 +205,8 @@ var app = {
 			enviando = true;
 			var datos = {
 				'action':'verifylogin',
+				'registrationId':window.localStorage.getItem('registrationId'),
+				'plataforma': user_platform,
 				'sessionId': sessionId
 			}
 			$.ajax({
