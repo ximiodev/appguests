@@ -1,7 +1,10 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.ximiodev.smartbellboy" version="1.0.3" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0" xmlns:gap="http://phonegap.com/ns/1.0">
+<widget id="com.ximiodev.smartbellboy" version="1.0.4" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0" xmlns:gap="http://phonegap.com/ns/1.0">
     <feature name="Device">
         <param name="browser-package" value="Device" />
+    </feature>
+    <feature name="NativeStorage">
+        <param name="browser-package" value="NativeStorage" />
     </feature>
     <name>Smart Bellboy</name>
     <description>

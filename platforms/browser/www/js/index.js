@@ -14,7 +14,7 @@ var animandofullsecint = false;
 var apiURL = 'https://www.smartbellboy.com/guests/api/';
 var loginUser = false;
 var fileSystemApp;
-var sessionId = localStorage.getItem('userlogin');
+var sessionId;
 var dcopy = new Date();
 var ncopy = dcopy.getFullYear();
 var copyCont = document.getElementById('yearcopy');
@@ -123,6 +123,7 @@ var app = {
 		}
     },
     onDeviceReady: function() {
+		sessionId = localStorage.getItem('userlogin');
 		user_platform = device.platform;
 		var applaunchCount = 0;
 		if(window.localStorage.getItem('launchCount')!='' && window.localStorage.getItem('launchCount')!=0 && window.localStorage.getItem('launchCount')!=null) {
@@ -2325,11 +2326,12 @@ var app = {
             },
             "browser": {},
             "ios": {
+				"senderID": "651262773142",
+                "gcmSandbox": true,
                 "sound": true,
                 "vibration": true,
                 "badge": true
-            },
-            "windows": {}
+            }
         });
 
         push.on('registration', function(data) {
@@ -2340,6 +2342,7 @@ var app = {
             var datos = {
 				'action':'saveTokenUser',
 				'sessionId': sessionId,
+				'plataforma': user_platform,
 				'usertoken': data.registrationId
 			}
 			$.ajax({
