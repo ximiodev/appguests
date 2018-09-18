@@ -123,7 +123,7 @@ var app = {
 		}
     },
     onDeviceReady: function() {
-		sessionId = localStorage.getItem('userlogin');
+		sessionId = window.localStorage.getItem('userlogin');
 		user_platform = device.platform;
 		var applaunchCount = 0;
 		if(window.localStorage.getItem('launchCount')!='' && window.localStorage.getItem('launchCount')!=0 && window.localStorage.getItem('launchCount')!=null) {
@@ -181,8 +181,8 @@ var app = {
 							user_hotel = data.hotel;
 							app.configureHotel();
 							loginUser = true;
-							localStorage.setItem('userlogin', user_data.guestID);
-							sessionId = localStorage.getItem('userlogin');
+							window.localStorage.setItem('userlogin', user_data.guestID);
+							sessionId = window.localStorage.getItem('userlogin');
 							app.removeLogin();
 							app.setupPush();
 							app.startApp();
@@ -1847,7 +1847,7 @@ var app = {
 				loginUser = true;
 				$( "#left-panel" ).animate( {left: "-100%"},100 , function() {$('.screenapp').removeClass('menuopened');});
 				secTipo = 0;
-				localStorage.setItem('userlogin', sessionId);
+				window.localStorage.setItem('userlogin', sessionId);
 				$('#homescreen').addClass('hidden').hide();
 				$('#loginscreen').removeClass('hidden').show();
 			}
@@ -2217,7 +2217,7 @@ var app = {
 			$('#notifications').on('change', function(e) {
 				e.preventDefault();
 				
-				var oldRegId = localStorage.getItem('registrationId');
+				var oldRegId = window.localStorage.getItem('registrationId');
 				var datos = {
 					'action':'updateTokenUser',
 					'sessionId': sessionId,
@@ -2335,9 +2335,9 @@ var app = {
         });
 
         push.on('registration', function(data) {
-            var oldRegId = localStorage.getItem('registrationId');
+            var oldRegId = window.localStorage.getItem('registrationId');
             if (oldRegId !== data.registrationId) {
-                localStorage.setItem('registrationId', data.registrationId);
+                window.localStorage.setItem('registrationId', data.registrationId);
             }
             var datos = {
 				'action':'saveTokenUser',
