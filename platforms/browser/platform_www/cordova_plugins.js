@@ -527,6 +527,24 @@ module.exports = [
         "id": "cordova-plugin-device.DeviceProxy",
         "pluginId": "cordova-plugin-device",
         "runs": true
+    },
+    {
+        "file": "plugins/cordova-plugin-nativestorage/www/mainHandle.js",
+        "id": "cordova-plugin-nativestorage.mainHandle",
+        "pluginId": "cordova-plugin-nativestorage",
+        "clobbers": [
+            "NativeStorage"
+        ]
+    },
+    {
+        "file": "plugins/cordova-plugin-nativestorage/www/LocalStorageHandle.js",
+        "id": "cordova-plugin-nativestorage.LocalStorageHandle",
+        "pluginId": "cordova-plugin-nativestorage"
+    },
+    {
+        "file": "plugins/cordova-plugin-nativestorage/www/NativeStorageError.js",
+        "id": "cordova-plugin-nativestorage.NativeStorageError",
+        "pluginId": "cordova-plugin-nativestorage"
     }
 ];
 module.exports.metadata = 
@@ -547,7 +565,8 @@ module.exports.metadata =
     "cordova-plugin-media": "5.0.2",
     "cordova-plugin-inappbrowser": "1.3.0",
     "es6-promise-plugin": "4.2.2",
-    "cordova-plugin-x-socialsharing": "5.4.1"
+    "cordova-plugin-x-socialsharing": "5.4.1",
+    "cordova-plugin-nativestorage": "2.3.2"
 }
 // BOTTOM OF METADATA
 });

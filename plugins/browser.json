@@ -25,6 +25,9 @@
         },
         "cordova-plugin-device": {
             "PACKAGE_NAME": "com.ximiodev.smartbellboy"
+        },
+        "cordova-plugin-nativestorage": {
+            "PACKAGE_NAME": "com.ximiodev.smartbellboy"
         }
     },
     "dependent_plugins": {}
