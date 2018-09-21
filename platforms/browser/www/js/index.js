@@ -123,7 +123,7 @@ var app = {
 		}
     },
     onDeviceReady: function() {
-		sessionId = localStorage.getItem('userlogin');
+		sessionId = window.localStorage.getItem('userlogin');
 		user_platform = device.platform;
 		var applaunchCount = 0;
 		if(window.localStorage.getItem('launchCount')!='' && window.localStorage.getItem('launchCount')!=0 && window.localStorage.getItem('launchCount')!=null) {
@@ -181,8 +181,8 @@ var app = {
 							user_hotel = data.hotel;
 							app.configureHotel();
 							loginUser = true;
-							localStorage.setItem('userlogin', user_data.guestID);
-							sessionId = localStorage.getItem('userlogin');
+							window.localStorage.setItem('userlogin', user_data.guestID);
+							sessionId = window.localStorage.getItem('userlogin');
 							app.removeLogin();
 							app.setupPush();
 							app.startApp();
@@ -205,6 +205,8 @@ var app = {
 			enviando = true;
 			var datos = {
 				'action':'verifylogin',
+				'registrationId':window.localStorage.getItem('registrationId'),
+				'plataforma': user_platform,
 				'sessionId': sessionId
 			}
 			$.ajax({
@@ -1847,7 +1849,7 @@ var app = {
 				loginUser = true;
 				$( "#left-panel" ).animate( {left: "-100%"},100 , function() {$('.screenapp').removeClass('menuopened');});
 				secTipo = 0;
-				localStorage.setItem('userlogin', sessionId);
+				window.localStorage.setItem('userlogin', sessionId);
 				$('#homescreen').addClass('hidden').hide();
 				$('#loginscreen').removeClass('hidden').show();
 			}
@@ -2217,7 +2219,7 @@ var app = {
 			$('#notifications').on('change', function(e) {
 				e.preventDefault();
 				
-				var oldRegId = localStorage.getItem('registrationId');
+				var oldRegId = window.localStorage.getItem('registrationId');
 				var datos = {
 					'action':'updateTokenUser',
 					'sessionId': sessionId,
@@ -2327,7 +2329,7 @@ var app = {
             "browser": {},
             "ios": {
 				"senderID": "651262773142",
-                "gcmSandbox": true,
+                "fcmSandbox": true,
                 "sound": true,
                 "vibration": true,
                 "badge": true
@@ -2335,9 +2337,9 @@ var app = {
         });
 
         push.on('registration', function(data) {
-            var oldRegId = localStorage.getItem('registrationId');
+            var oldRegId = window.localStorage.getItem('registrationId');
             if (oldRegId !== data.registrationId) {
-                localStorage.setItem('registrationId', data.registrationId);
+                window.localStorage.setItem('registrationId', data.registrationId);
             }
             var datos = {
 				'action':'saveTokenUser',
@@ -2993,7 +2995,7 @@ var it = {
 	promotions: "Promozioni",
 	news: "Notizie",
 	gallery: "Galleria",
-	rate_us: "Valutaci",
+	rate_us: "Votaci",
 	logout: "Esci",
 	quick_actions: "Scorciatoie",
 	your_calendar: "Il tuo calendario",
@@ -3024,7 +3026,7 @@ var it = {
 	roomervice_shop: "Servizio in camera e negozio",
 	breakfast: "Colazione",
 	food_drinks: "Cibo e bevande",
-	room: "Camera",
+	room: "Stanza",
 	services: "Servizi",
 	alert: "Avviso",
 	username_or_pass_inco: "Nome utente o password errati.",
@@ -3086,7 +3088,7 @@ var it = {
     notifications: "Notifiche",
     view_all_purchase: "Vedi i miei acquisti",
     my_shops: "I miei acquisti",
-	tasso: "Valutare",
+	rate: "Votaci",
 	total_spend: "Acquisti totali",
 	text_rate_app: "Se vi piace utilizzando SmartBellboy, ti dispiacerebbe prendere un momento per qualificare non ci vorrà più di un minuto Grazie per il vostro sostegno.",
 	rate_app_now: "Vota SmartBellboy",

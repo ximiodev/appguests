@@ -40,7 +40,7 @@
 						<img src="img/logo.svg" class="svg logo">
 						<h1>Smart Bellboy</h1>
 						<div>
-							<input type="text" class="form-control" id="username" name="username" placeholder="Username" required="">
+							<input type="text" class="form-control" id="username" name="username" placeholder="Username" required="" autocorrect="off" autocapitalize="none">
 						</div>
 						<div>
 							<input type="password" class="form-control" id="userpass" name="userpass" placeholder="Password" required="">
@@ -476,7 +476,7 @@
 		<script type="text/javascript" src="js/index.js"></script>
 		<script type="text/javascript">
 			window.onerror = function(message, url, lineNumber) {
-				alert("Error: "+message+" in "+url+" at line "+lineNumber);
+				//~ alert("Error: "+message+" in "+url+" at line "+lineNumber);
 			}
 			document.addEventListener('deviceready', function () {
 				app.initialize();

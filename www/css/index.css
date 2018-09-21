@@ -71,6 +71,7 @@ body {
 	max-width: 240px;
 	margin: 40px auto 15px;
 	height: auto;
+	    max-height: 240px;
 }
 
 #loginscreen .logincont input {
@@ -79,6 +80,8 @@ body {
 
 #loginscreen .logincont {
 	text-align: center;
+	max-width: 480px;
+    margin: 0 auto;
 }
 
 #loginscreen .logincont h1 {
